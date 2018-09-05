@@ -3,5 +3,5 @@
 # user model
 class User < ApplicationRecord
   has_secure_password
-  validates_presence_of :password, :username
+  validates :username, presence: true
 end

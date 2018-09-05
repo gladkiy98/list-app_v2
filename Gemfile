@@ -12,12 +12,14 @@ gem 'puma', '~> 3.11'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 5.2.1'
 gem 'rubocop', require: false
-gem 'rspec-rails'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 3.7'
+  gem 'rubocop-rspec'
 end
 
 group :development do

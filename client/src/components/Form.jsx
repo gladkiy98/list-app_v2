@@ -50,4 +50,4 @@ ConnectedForm.propTypes = {
   addArticle: PropTypes.function.isRequired
 };
 
-export default const Form = connect(null, mapDispatchToProps)(ConnectedForm);
+export const Form = connect(null, mapDispatchToProps)(ConnectedForm);
