@@ -1,3 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # get 'tokens/create'
+  # get 'users/create'
+  scope '/api' do
+    resources :users
+    resources :tokens, only: [:create]
+  end
 end
