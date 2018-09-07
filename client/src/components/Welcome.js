@@ -32,9 +32,12 @@ class Welcome extends Component{
     return(
       <Container>
         <Row>
+          <Col>
+            <h1>hello</h1>
+          </Col>
           <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE}}>{this.renderRedirect()}
             <Button color="secondary" onClick={this.handleRedirect}>
-              Sign in
+              Signin
             </Button>
           </Col>
         </Row>

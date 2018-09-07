@@ -38,7 +38,7 @@ class Header extends Component{
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/signin' />;
+      return <Redirect to='/' />;
     }
   }
 

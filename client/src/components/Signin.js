@@ -27,8 +27,8 @@ class SignIn extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
 
     var formData = new FormData();
     formData.append('username', this.state.username);
@@ -36,9 +36,9 @@ class SignIn extends Component {
 
     fetch('http://localhost:3000/api/tokens',
       {method: 'POST', body: formData})
-      .then(res => res.json()).then(res =>
+      .then(res => res.json()).then(res => (console.log(res.jwt),
       window.localStorage.setItem('jwt', res.jwt)
-      )
+    ))
       .then(() => this.props.history.push('/dashboard'));
   }
 
