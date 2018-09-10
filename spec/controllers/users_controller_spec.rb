@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe UsersController, :type => :controller do
+RSpec.describe UsersController, type: :controller do
   let(:user) { build(:user) }
 
-  describe "#create" do
-    context "when a successfull response" do
+  describe '#create' do
+    context 'when a successfull response' do
       let(:params) do
         { user: {
           username: user.username,
@@ -16,17 +18,16 @@ RSpec.describe UsersController, :type => :controller do
       it { expect(response).to be_success }
     end
 
-    context "when a bad response" do
+    context 'when a bad response' do
       let(:params) do
         { user: {
           username: user.username,
           password: user.password,
-          password_confirmation: 123
+          password_confirmation: 000
         } }
       end
 
       it { expect(response).to be_success }
     end
-
   end
 end

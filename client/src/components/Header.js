@@ -73,7 +73,7 @@ class Header extends Component{
                 <DropdownToggle caret nav>
                   Hi, {this.state.username}
                 </DropdownToggle>
-                <DropdownMenu right>
+                <DropdownMenu id="dropdown" right>
                   <DropdownItem>
                     Settings
                   </DropdownItem>
