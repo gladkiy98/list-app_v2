@@ -6,6 +6,8 @@ RSpec.describe UsersController, type: :controller do
   let(:user) { build(:user) }
 
   describe '#create' do
+    before { post :create, params: params }
+
     context 'when a successfull response' do
       let(:params) do
         { user: {
@@ -23,11 +25,11 @@ RSpec.describe UsersController, type: :controller do
         { user: {
           username: user.username,
           password: user.password,
-          password_confirmation: 000
+          password_confirmation: 0o00
         } }
       end
 
-      it { expect(response).to be_success }
+      it { expect(response).not_to be_success }
     end
   end
 end

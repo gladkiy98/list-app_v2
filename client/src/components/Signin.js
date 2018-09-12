@@ -19,8 +19,27 @@ class SignIn extends Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      errors: {}
     };
+  }
+
+  handleValidation = () => {
+    let errors = {};
+
+    if(!this.state.username){
+      errors['username'] = ' cannot be empty';
+    }
+
+    if(!this.state.password){
+      errors['password'] = ' cannot be empty';
+    }
+
+    if(this.state.password.length < 8){
+      errors['password_length'] = ' is too short (minimum is 8 characters) '
+    }
+
+    this.setState({errors: errors});
   }
 
   handleChange = (e) => {
@@ -28,18 +47,19 @@ class SignIn extends Component {
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
+    if(this.handleValidation()){
+      event.preventDefault();
 
-    var formData = new FormData();
-    formData.append('username', this.state.username);
-    formData.append('password', this.state.password);
+      var formData = new FormData();
+      formData.append('username', this.state.username);
+      formData.append('password', this.state.password);
 
-    fetch('http://localhost:3000/api/tokens',
-      {method: 'POST', body: formData})
-      .then(res => res.json()).then(res => (console.log(res.jwt),
-      window.localStorage.setItem('jwt', res.jwt)
-    ))
-      .then(() => this.props.history.push('/dashboard'));
+      fetch('http://localhost:3000/api/tokens',
+        {method: 'POST', body: formData})
+        .then(res => res.json()).then(res =>
+        window.localStorage.setItem('jwt', res.jwt)
+      )
+        .then(() => this.props.history.push('/dashboard')) }
   }
 
   render() {
@@ -52,6 +72,7 @@ class SignIn extends Component {
               <Form>
                 <FormGroup>
                   <Label for="username">Username</Label>
+                  {this.state.errors['username']}
                   <Input
                       id='username'
                       name='username'
@@ -62,6 +83,8 @@ class SignIn extends Component {
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password</Label>
+                  {this.state.errors['password']}
+                  {this.state.errors['password_length']}
                   <Input
                       id='password'
                       name='password'
@@ -81,7 +104,7 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
-  history: PropTypes.string.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default SignIn;

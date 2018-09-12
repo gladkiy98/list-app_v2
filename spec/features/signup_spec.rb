@@ -4,14 +4,9 @@ require 'rails_helper'
 
 describe 'signup & signin', js: true do
   it 'signup after create user' do
-    visit('http://localhost:4000/signup/')
-    fill_in 'username', with: 'newuser'
-    fill_in 'password', with: '123456'
-    fill_in 'password_confirmation', with: '123456'
-    click_button 'Sign up'
-    expect(page).to have_content('Sign in')
-    fill_in 'username', with: 'newuser'
-    fill_in 'password', with: '123456'
+    fill_username_password_and_password_confirmation('newuser', 123_456, 123_456)
+    expect_have_content_sign_in
+    fill_username_and_password('newuser', 123_456)
     click_button 'Submit'
     expect(page).to have_content('List App')
     find(:css, '.dropdown').click
@@ -19,29 +14,17 @@ describe 'signup & signin', js: true do
   end
 
   it 'not valid data in password confirmation field' do
-    visit('http://localhost:4000/signup')
-    fill_in 'username', with: 'newuser'
-    fill_in 'password', with: '123456'
-    fill_in 'password_confirmation', with: '123'
-    click_button 'Sign up'
-    expect(page).not_to have_content('Sign in')
+    fill_username_password_and_password_confirmation('newuser', 123_456, 123)
+    expect_not_have_content_sign_in
   end
 
   it 'nil password field' do
-    visit('http://localhost:4000/signup')
-    fill_in 'username', with: 'newuser'
-    fill_in 'password', with: ''
-    fill_in 'password_confirmation', with: ''
-    click_button 'Sign up'
-    expect(page).not_to have_content('Sign in')
+    fill_username_password_and_password_confirmation('newuser', '', '')
+    expect_not_have_content_sign_in
   end
 
   it 'nil username field' do
-    visit('http://localhost:4000/signup')
-    fill_in 'username', with: ''
-    fill_in 'password', with: '123456'
-    fill_in 'password_confirmation', with: '123456'
-    click_button 'Sign up'
-    expect(page).not_to have_content('Sign in')
+    fill_username_password_and_password_confirmation('', 123_456, 123_456)
+    expect_not_have_content_sign_in
   end
 end

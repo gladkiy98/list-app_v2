@@ -22,8 +22,35 @@ class SignUp extends Component {
     this.state = {
       username: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      errors: {}
     };
+  }
+
+  handleValidation = () => {
+    let errors = {};
+
+    if(!this.state.username){
+      errors['username'] = 'Username cannot be empty';
+    }
+
+    if(!this.state.password){
+      errors['password'] = 'Password cannot be empty';
+    }
+
+    if(!this.state.password_confirmation){
+      errors['password_confirmation'] = 'Password confirmation cannot be empty';
+    }
+
+    if(this.state.password_confirmation !== this.state.password){
+      errors['password_confirmation_equal'] = 'Password confirmation must be equal to Password';
+    }
+
+    if(this.state.password.length < 8){
+      errors['password_length'] = 'Password is too short (minimum is 8 characters) '
+    }
+
+    this.setState({errors: errors});
   }
 
   handleChange = (e) => {
@@ -31,12 +58,14 @@ class SignUp extends Component {
   }
 
   handleSubmit = () => {
-    axios.post('http://localhost:3000/api/users', {user: {
-      'username': this.state.username,
-      'password': this.state.password,
-      'password_confirmation': this.state.password_confirmation }
-    })
-      .then(() => this.props.history.push('/'));
+    if(this.handleValidation()){
+      axios.post('http://localhost:3000/api/users', {user: {
+        'username': this.state.username,
+        'password': this.state.password,
+        'password_confirmation': this.state.password_confirmation }
+      })
+        .then(() => this.props.history.push('/'));
+    }
   }
 
   render() {
@@ -56,6 +85,9 @@ class SignUp extends Component {
                       placeholder="Username"
                       type='username'
                       value={this.state.username} />
+                  <div className='username_error'>
+                    {this.state.errors['username']}
+                  </div>
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password</Label>
@@ -66,6 +98,8 @@ class SignUp extends Component {
                       placeholder="Password"
                       type='password'
                       value={this.state.password} />
+                  {this.state.errors['password']}
+                  {this.state.errors['password_length']}
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password</Label>
@@ -76,6 +110,8 @@ class SignUp extends Component {
                       placeholder="Password Confirmation"
                       type='password'
                       value={this.state.password_confirmation} />
+                  {this.state.errors['password_confirmation']}
+                  {this.state.errors['password_confirmation_equal']}
                 </FormGroup>
                 <Button onClick={this.handleSubmit}>Sign up</Button>
               </Form>
@@ -88,7 +124,7 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  history: PropTypes.string.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default SignUp;

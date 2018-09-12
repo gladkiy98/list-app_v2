@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'user not create with different password & password_confirmation' do
-    user2 = build(:user, password:'123', password_confirmation:'124')
+    user2 = build(:user, password: '123', password_confirmation: '124')
     expect(user2).not_to be_valid
   end
 end

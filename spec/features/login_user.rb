@@ -4,9 +4,8 @@ require 'rails_helper'
 
 describe 'signin & logout', js: true do
   it 'visit homepage & signin' do
-    visit('http://localhost:4000/')
-    fill_in 'username', with: 'user'
-    fill_in 'Password', with: '123456'
+    visit_signup
+    fill_username_and_password('username', 123_456)
     click_button 'Submit'
     expect(page).to have_content('List App')
     find(:css, '.dropdown').click
@@ -14,7 +13,7 @@ describe 'signin & logout', js: true do
   end
 
   it 'visit dashboard without login' do
-    visit('http://localhost:4000/dashboard')
+    visit_signup
     expect(page).not_to have_content('List App')
   end
 end
