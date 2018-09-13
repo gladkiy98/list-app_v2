@@ -13,6 +13,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 5.2.1'
 gem 'rubocop', require: false
 gem 'rspec-rails'
+gem 'foreman'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
