@@ -6,6 +6,10 @@ module Helpers
     visit('http://localhost:4000/signup/')
   end
 
+  def visit_signin
+    visit('http://localhost:4000/')
+  end
+
   def fill_username_password_and_password_confirmation(username, password, password_confirmation)
     visit_signup
     fill_in 'username', with: username
@@ -16,7 +20,7 @@ module Helpers
 
   def fill_username_and_password(username, password)
     fill_in 'username', with: username
-    fill_in 'Password', with: password
+    fill_in 'password', with: password
   end
 
   def expect_not_have_content_sign_in

@@ -4,7 +4,7 @@ import SignIn from './Signin';
 import SignUp from './Signup';
 import Dashboard from './Dashboard';
 import Welcome from './Welcome';
-import '../App.scss';
+import '../App.css';
 
 const App = () => {
   return (

@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user do
     username { Faker::Name.unique.name }
-    password { '123456' }
-    password_confirmation { '123456' }
+    password { '12345678' }
+    password_confirmation { '12345678' }
   end
 end

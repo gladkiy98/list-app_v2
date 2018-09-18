@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   it 'is valid with valid attributes' do
     expect(@user).to be_valid
   end
-
+  
   it 'is not valid without a password' do
     user2 = build(:user, password: nil)
     expect(user2).not_to be_valid

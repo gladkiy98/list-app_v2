@@ -20,59 +20,69 @@ class SignIn extends Component {
     this.state = {
       username: '',
       password: '',
-      errors: {}
+      errors: {},
+      isSubmitted: false
     };
   }
 
   handleValidation = () => {
     let errors = {};
+    let formIsValid = true;
 
     if(!this.state.username){
-      errors['username'] = ' cannot be empty';
+      formIsValid = false;
+      errors['username'] = 'Username cannot be empty';
     }
 
     if(!this.state.password){
-      errors['password'] = ' cannot be empty';
+      formIsValid = false;
+      errors['password'] = 'Password cannot be empty';
     }
 
     if(this.state.password.length < 8){
-      errors['password_length'] = ' is too short (minimum is 8 characters) '
+      formIsValid = false;
+      errors['password_length'] = 'Password is too short (minimum is 8 characters)';
     }
 
-    this.setState({errors: errors});
+    this.setState({ errors: errors });
+    return formIsValid;
   }
 
   handleChange = (e) => {
+    if(this.state.isSubmitted ){
+      this.handleValidation();
+    }
     this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = (event) => {
-    if(this.handleValidation()){
+    this.setState({isSubmitted: true});
+    if(this.handleValidation()) {
       event.preventDefault();
 
       var formData = new FormData();
       formData.append('username', this.state.username);
       formData.append('password', this.state.password);
-
       fetch('http://localhost:3000/api/tokens',
         {method: 'POST', body: formData})
         .then(res => res.json()).then(res =>
         window.localStorage.setItem('jwt', res.jwt)
       )
-        .then(() => this.props.history.push('/dashboard')) }
+        .then(() => this.props.history.push('/dashboard'));
+    }
   }
+
 
   render() {
     return(
       <Container>
-        <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE}}>
+        <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE }}>
           <Card>
             <CardHeader>Sign in</CardHeader>
             <CardBody>
               <Form>
                 <FormGroup>
                   <Label for="username">Username</Label>
-                  {this.state.errors['username']}
                   <Input
                       id='username'
                       name='username'
@@ -80,11 +90,12 @@ class SignIn extends Component {
                       placeholder="Username"
                       type='username'
                       value={this.state.username} />
+                  <div className='error'>
+                    {this.state.errors['username']}
+                  </div>
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password</Label>
-                  {this.state.errors['password']}
-                  {this.state.errors['password_length']}
                   <Input
                       id='password'
                       name='password'
@@ -92,6 +103,12 @@ class SignIn extends Component {
                       placeholder="Password"
                       type='password'
                       value={this.state.password} />
+                  <div className='error'>
+                    {this.state.errors['password']}
+                  </div>
+                  <div className='error'>
+                    {this.state.errors['password_length']}
+                  </div>
                 </FormGroup>
                 <Button onClick={this.handleSubmit}>Submit</Button>
               </Form>
