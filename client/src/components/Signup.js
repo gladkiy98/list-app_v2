@@ -70,7 +70,7 @@ class SignUp extends Component {
 
   handleSubmit = () => {
     this.setState({isSubmitted: true});
-    if(this.handleValidation()){
+    if(this.handleValidation()) {
       axios.post('http://localhost:3000/api/users', {user: {
         'username': this.state.username,
         'password': this.state.password,

@@ -49,7 +49,7 @@ class SignIn extends Component {
   }
 
   handleChange = (e) => {
-    if(this.state.isSubmitted ){
+    if(this.state.isSubmitted) {
       this.handleValidation();
     }
     this.setState({ [e.target.name]: e.target.value });
