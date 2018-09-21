@@ -1,0 +1,54 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+
+    docker: # use the docker executor type; machine and macos executors are also supported
+     - image: circleci/ruby:2.5.1-node-browsers
+       environment:
+         RAILS_ENV: test
+         PGHOST: 127.0.0.1
+         PGUSER: list_app_v2
+
+     - image: circleci/postgres:9.5.13
+       environment:
+         POSTGRES_USER: list_app_v2
+         POSTGRES_DB: list_app_v2_test
+
+    steps:
+      - checkout # check out the code in the project directory
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: bundle install
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # Database setup
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+
+      # run tests!
+      - run: rubocop
+      - run:
+          name: run tests
+          command: |
+            mkdir -p /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/controllers/*_spec.rb" | circleci tests split --split-by=timings)"
+            bundle exec rspec --format documentation \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              -- $(echo "${TEST_FILES}" | sed -e 's/\n/\\n/' -e 's/ /\ /')
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results

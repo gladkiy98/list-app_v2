@@ -22,27 +22,68 @@ class SignUp extends Component {
     this.state = {
       username: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      errors: {},
+      isSubmitted: false
     };
   }
 
+  handleValidation = () => {
+    let errors = {};
+    let formIsValid = true;
+
+    if (!this.state.username) {
+      formIsValid = false;
+      errors['username'] = 'Username cannot be empty';
+    }
+
+    if (!this.state.password) {
+      formIsValid = false;
+      errors['password'] = 'Password cannot be empty';
+    }
+
+    if (!this.state.password_confirmation) {
+      formIsValid = false;
+      errors['password_confirmation'] = 'Password confirmation cannot be empty';
+    }
+
+    if (this.state.password_confirmation !== this.state.password) {
+      formIsValid = false;
+      errors['password_confirmation_equal'] = 'Password confirmation must be equal to Password';
+    }
+
+    if (this.state.password.length < 8) {
+      formIsValid = false;
+      errors['password_length'] = 'Password is too short (minimum is 8 characters)';
+    }
+
+    this.setState({ errors: errors });
+    return formIsValid;
+  }
+
   handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
+    if (this.state.isSubmitted) {
+      this.handleValidation();
+    }
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = () => {
-    axios.post('http://localhost:3000/api/users', {user: {
-      'username': this.state.username,
-      'password': this.state.password,
-      'password_confirmation': this.state.password_confirmation }
-    })
-      .then(() => this.props.history.push('/signin'));
+    this.setState({ isSubmitted: true });
+    if (this.handleValidation()) {
+      axios.post('http://localhost:3000/api/users', {user: {
+        'username': this.state.username,
+        'password': this.state.password,
+        'password_confirmation': this.state.password_confirmation }
+      })
+        .then(() => this.props.history.push('/'));
+    }
   }
 
   render() {
     return(
       <Container>
-        <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE}}>
+        <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE }}>
           <Card>
             <CardHeader>Sign up</CardHeader>
             <CardBody>
@@ -56,6 +97,9 @@ class SignUp extends Component {
                       placeholder="Username"
                       type='username'
                       value={this.state.username} />
+                  <div className='error'>
+                    {this.state.errors['username']}
+                  </div>
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password</Label>
@@ -66,6 +110,12 @@ class SignUp extends Component {
                       placeholder="Password"
                       type='password'
                       value={this.state.password} />
+                  <div className='error'>
+                    {this.state.errors['password']}
+                  </div>
+                  <div className='error'>
+                    {this.state.errors['password_length']}
+                  </div>
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password</Label>
@@ -76,6 +126,12 @@ class SignUp extends Component {
                       placeholder="Password Confirmation"
                       type='password'
                       value={this.state.password_confirmation} />
+                  <div className='error'>
+                    {this.state.errors['password_confirmation']}
+                  </div>
+                  <div className='error'>
+                    {this.state.errors['password_confirmation_equal']}
+                  </div>
                 </FormGroup>
                 <Button onClick={this.handleSubmit}>Sign up</Button>
               </Form>
@@ -88,7 +144,7 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  history: PropTypes.string.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default SignUp;

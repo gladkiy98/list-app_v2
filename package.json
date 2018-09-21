@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "killme",
   "version": "1.0.0",
   "engines": {
@@ -9,11 +10,17 @@
   "main": "index.js",
   "directories": {
     "lib": "lib"
+=======
+  "name": "react-and-rails",
+  "engines": {
+    "node": "6.3.1"
+>>>>>>> f51e49eda5ec51c974bec35accc00cec50fa29f0
   },
   "scripts": {
     "build": "cd client && npm install && npm run build && cd ..",
     "deploy": "cp -a client/build/. public/",
     "postinstall": "npm run build && npm run deploy && echo 'Client built!'"
+<<<<<<< HEAD
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +28,7 @@
     "eslint": "5.6.0",
     "react-redux": "^4.0.5",
     "axios": "0.18.0"
+=======
+>>>>>>> f51e49eda5ec51c974bec35accc00cec50fa29f0
   }
 }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :start do
   desc 'Start dev server'
   task :development do
@@ -9,4 +11,4 @@ namespace :start do
     exec 'NPM_CONFIG_PRODUCTION=true npm run postinstall && foreman start'
   end
 end
-task :start => 'start:development'
+task start: 'start:development'

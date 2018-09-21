@@ -38,7 +38,7 @@ class Header extends Component{
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/signin' />;
+      return <Redirect to='/' />;
     }
   }
 
@@ -73,7 +73,7 @@ class Header extends Component{
                 <DropdownToggle caret nav>
                   Hi, {this.state.username}
                 </DropdownToggle>
-                <DropdownMenu right>
+                <DropdownMenu id="dropdown" right>
                   <DropdownItem>
                     Settings
                   </DropdownItem>
