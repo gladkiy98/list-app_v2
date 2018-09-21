@@ -17,7 +17,8 @@ gem 'rspec-rails'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw],
+  gem 'foreman', '~> 0.82.0'
 end
 
 group :development do
