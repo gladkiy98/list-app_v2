@@ -29,17 +29,17 @@ class SignIn extends Component {
     let errors = {};
     let formIsValid = true;
 
-    if(!this.state.username){
+    if (!this.state.username) {
       formIsValid = false;
       errors['username'] = 'Username cannot be empty';
     }
 
-    if(!this.state.password){
+    if (!this.state.password) {
       formIsValid = false;
       errors['password'] = 'Password cannot be empty';
     }
 
-    if(this.state.password.length < 8){
+    if (this.state.password.length < 8) {
       formIsValid = false;
       errors['password_length'] = 'Password is too short (minimum is 8 characters)';
     }
@@ -49,22 +49,22 @@ class SignIn extends Component {
   }
 
   handleChange = (e) => {
-    if(this.state.isSubmitted ){
+    if (this.state.isSubmitted) {
       this.handleValidation();
     }
     this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = (event) => {
-    this.setState({isSubmitted: true});
-    if(this.handleValidation()) {
+    this.setState({ isSubmitted: true });
+    if (this.handleValidation()) {
       event.preventDefault();
 
       var formData = new FormData();
       formData.append('username', this.state.username);
       formData.append('password', this.state.password);
       fetch('http://localhost:3000/api/tokens',
-        {method: 'POST', body: formData})
+        { method: 'POST', body: formData })
         .then(res => res.json()).then(res =>
         window.localStorage.setItem('jwt', res.jwt)
       )

@@ -26,6 +26,7 @@ group :development, :test do
   gem 'phantomjs'
   gem 'poltergeist'
   gem 'rspec-rails', '~> 3.7'
+  gem 'rspec_junit_formatter'
   gem 'rubocop-rspec'
 end
 

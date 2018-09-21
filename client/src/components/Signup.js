@@ -32,45 +32,45 @@ class SignUp extends Component {
     let errors = {};
     let formIsValid = true;
 
-    if(!this.state.username){
+    if (!this.state.username) {
       formIsValid = false;
       errors['username'] = 'Username cannot be empty';
     }
 
-    if(!this.state.password){
+    if (!this.state.password) {
       formIsValid = false;
       errors['password'] = 'Password cannot be empty';
     }
 
-    if(!this.state.password_confirmation){
+    if (!this.state.password_confirmation) {
       formIsValid = false;
       errors['password_confirmation'] = 'Password confirmation cannot be empty';
     }
 
-    if(this.state.password_confirmation !== this.state.password){
+    if (this.state.password_confirmation !== this.state.password) {
       formIsValid = false;
       errors['password_confirmation_equal'] = 'Password confirmation must be equal to Password';
     }
 
-    if(this.state.password.length < 8){
+    if (this.state.password.length < 8) {
       formIsValid = false;
       errors['password_length'] = 'Password is too short (minimum is 8 characters)';
     }
 
-    this.setState({errors: errors});
+    this.setState({ errors: errors });
     return formIsValid;
   }
 
   handleChange = (e) => {
-    if(this.state.isSubmitted) {
+    if (this.state.isSubmitted) {
       this.handleValidation();
     }
     this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = () => {
-    this.setState({isSubmitted: true});
-    if(this.handleValidation()){
+    this.setState({ isSubmitted: true });
+    if (this.handleValidation()) {
       axios.post('http://localhost:3000/api/users', {user: {
         'username': this.state.username,
         'password': this.state.password,
