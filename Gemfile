@@ -23,6 +23,7 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
+  gem 'foreman'
   gem 'phantomjs'
   gem 'poltergeist'
   gem 'rspec-rails', '~> 3.7'
