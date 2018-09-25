@@ -11,6 +11,7 @@ parserOptions:
   sourceType: module
 plugins:
   - react
+  - jest
 rules:
   linebreak-style:
     - error
@@ -52,3 +53,5 @@ rules:
   react/jsx-max-depth: off
   react/jsx-sort-default-props: off
   react/no-deprecated: off
+  jest/valid-expect: warn
+  jest/consistent-test-it: warn

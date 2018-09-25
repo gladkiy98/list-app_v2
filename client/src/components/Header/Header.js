@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import jwtDecode from 'jwt-decode';
 import {
   Collapse,
   Navbar,
@@ -20,6 +19,7 @@ import { FormattedMessage } from 'react-intl';
 import { setLocale } from '../../actions/changeLocale';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 class Header extends Component{
   constructor(props) {
@@ -28,13 +28,22 @@ class Header extends Component{
       isOpen: false,
       username: undefined,
       redirect: false,
+      signedIn: false
     };
   }
 
-  componentWillMount() {
-    const jwt = window.localStorage.getItem('jwt');
-    const result = jwtDecode(jwt);
-    this.setState({ username: result.username });
+  componentDidMount() {
+    let token = localStorage.getItem('jwt');
+    axios.get('http://localhost:3000/api/users', {
+      headers: {
+        'Authorization' : token
+      }
+    })
+    .then(response => {
+      this.setState({
+        username: response.data
+      });
+    });
   }
 
   setRedirect = () => {
@@ -70,7 +79,7 @@ class Header extends Component{
         <Container >
           <NavbarBrand href="/">
             <FormattedMessage defaultMessage="Dashboard" id="nav.dashboard" />
-          </NavbarBrand >
+          </NavbarBrand>
           <NavbarToggler onClick={this.handleToggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

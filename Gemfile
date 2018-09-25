@@ -26,6 +26,7 @@ group :development, :test do
   gem 'foreman'
   gem 'phantomjs'
   gem 'poltergeist'
+  gem 'pry-rails'
   gem 'rspec-rails', '~> 3.7'
   gem 'rspec_junit_formatter'
   gem 'rubocop-rspec'

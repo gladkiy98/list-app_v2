@@ -7,7 +7,7 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import { SMALL_COLUMN_SIZE, SMALL_OFFSET_SIZE } from '../constants/magic-numbers';
+import { SMALL_COLUMN_SIZE, SMALL_OFFSET_SIZE } from '../../constants/magic-numbers';
 class Welcome extends Component{
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ class Welcome extends Component{
 
   render() {
     return(
-      <Container>
+      <Container className='welcome'>
         <Row>
           <Col>
             <h1>hello</h1>

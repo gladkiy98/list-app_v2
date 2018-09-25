@@ -2,7 +2,7 @@
   "name": "react-and-rails",
   "engines": {
     "node": "8.11.3",
-    "npm":  "6.4.1"
+    "npm": "6.4.1"
   },
   "scripts": {
     "build": "cd client && npm install && npm run build && cd ..",

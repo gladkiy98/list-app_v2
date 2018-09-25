@@ -9,11 +9,14 @@ jobs:
          RAILS_ENV: test
          PGHOST: 127.0.0.1
          PGUSER: list_app_v2
+         SELENIUM_DRIVER_URL: http://localhost:4444/wd/hub
 
      - image: circleci/postgres:9.5.13
        environment:
          POSTGRES_USER: list_app_v2
          POSTGRES_DB: list_app_v2_test
+
+     - image: selenium/standalone-firefox:latest
 
     steps:
       - checkout # check out the code in the project directory
@@ -26,6 +29,11 @@ jobs:
       - run:
           name: install dependencies
           command: bundle install
+
+      - run:
+          name: install npm
+          command: npm install
+
       - save_cache:
           paths:
             - ./vendor/bundle
@@ -35,8 +43,10 @@ jobs:
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
-      # run tests!
+      # run rubocop
       - run: rubocop
+
+      # run tests!
       - run:
           name: run tests
           command: |
@@ -46,6 +56,12 @@ jobs:
                               --format RspecJunitFormatter \
                               --out /tmp/test-results/rspec.xml \
                               -- $(echo "${TEST_FILES}" | sed -e 's/\n/\\n/' -e 's/ /\ /')
+
+      # run eslint
+      - run:
+          name: eslint
+          command: cd client && npm run eslint
+
       # collect reports
       - store_test_results:
           path: /tmp/test-results

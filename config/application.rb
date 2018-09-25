@@ -18,6 +18,8 @@ Bundler.require(*Rails.groups)
 module ListAppV2
   # rack cors
   class Application < Rails::Application
+    config.middleware.use ActionDispatch::Flash
+    config.paths.add Rails.root.join('lib').to_s, eager_load: true
     config.load_defaults 5.2
 
     config.generators.system_tests = nil
@@ -30,7 +32,6 @@ module ListAppV2
         ]
       end
     end
-
     config.api_only = true
   end
 end

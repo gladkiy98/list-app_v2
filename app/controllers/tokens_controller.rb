@@ -6,9 +6,8 @@ class TokensController < ApplicationController
     user = User.find_by(username: params[:username])
     if user
       user.authenticate(params[:password])
-      render json: {
-        jwt: encode_token(id: user.id, username: user.username)
-      }, status: :ok
+      jwt = Auth.encode(id: user.id)
+      render json: { jwt: jwt }, status: :ok
     else
       render json: { error: 'Login Unsuccessfull' }, status: :unauthorized
     end
