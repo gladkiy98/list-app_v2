@@ -8,6 +8,7 @@ import { IntlProvider } from 'react-intl';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import messages from './messages';
+import '../App.css';
 
 const App = ({lang}) => {
     return (

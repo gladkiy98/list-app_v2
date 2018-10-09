@@ -7,7 +7,7 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import { SIZE_6, SIZE_3 } from '../../constants/magic-numbers';
+import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
 class Welcome extends Component{
   constructor(props) {
     super(props);

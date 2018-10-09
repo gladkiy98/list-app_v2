@@ -16,7 +16,7 @@ import {
 } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { setLocale } from '../../actions/changeLocale';
+import { setLocale } from '../actions/changeLocale';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';

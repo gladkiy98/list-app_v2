@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-literals */
 import React, { Component } from 'react';
 import axios from 'axios';
+import Header from './Header';
 import {
   Button,
   Form,
@@ -14,7 +15,7 @@ import {
   Col
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { SMALL_COLUMN_SIZE, SMALL_OFFSET_SIZE } from '../constants/magic-numbers';
+import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
 
 class SignUp extends Component {
   constructor(props) {
@@ -24,7 +25,9 @@ class SignUp extends Component {
       password: '',
       password_confirmation: '',
       errors: {},
-      isSubmitted: false
+      isSubmitted: false,
+      errorExist: '',
+      exist: true
     };
   }
 
@@ -57,7 +60,7 @@ class SignUp extends Component {
       errors['password_length'] = 'Password is too short (minimum is 8 characters)';
     }
 
-    this.setState({ errors: errors });
+    this.setState({ errors });
     return formIsValid;
   }
 
@@ -65,80 +68,93 @@ class SignUp extends Component {
     if (this.state.isSubmitted) {
       this.handleValidation();
     }
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value, exist: true, errorExist: ''});
   }
 
   handleSubmit = () => {
     this.setState({ isSubmitted: true });
     if (this.handleValidation()) {
-      axios.post('http://localhost:3000/api/users', {user: {
+      axios.post('/api/users', { user: {
         'username': this.state.username,
         'password': this.state.password,
         'password_confirmation': this.state.password_confirmation }
       })
-        .then(() => this.props.history.push('/'));
+      .catch(error => {
+        this.setState({ errorExist: error.response.data.errors, exist: false });
+      })
+      .then(() => {
+        if (this.state.exist) {
+          this.props.history.push('/');
+        }
+      });
     }
   }
 
   render() {
     return(
-      <Container className="signup">
-        <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE }}>
-          <Card>
-            <CardHeader>Sign up</CardHeader>
-            <CardBody>
-              <Form>
-                <FormGroup>
-                  <Label for="username">Username</Label>
-                  <Input
-                      id='username'
-                      name='username'
-                      onChange={this.handleChange}
-                      placeholder="Username"
-                      type='username'
-                      value={this.state.username} />
-                  <div className='error'>
-                    {this.state.errors['username']}
-                  </div>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="password">Password</Label>
-                  <Input
-                      id='password'
-                      name='password'
-                      onChange={this.handleChange}
-                      placeholder="Password"
-                      type='password'
-                      value={this.state.password} />
-                  <div className='error'>
-                    {this.state.errors['password']}
-                  </div>
-                  <div className='error'>
-                    {this.state.errors['password_length']}
-                  </div>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="password">Password</Label>
-                  <Input
-                      id='password_confirmation'
-                      name='password_confirmation'
-                      onChange={this.handleChange}
-                      placeholder="Password Confirmation"
-                      type='password'
-                      value={this.state.password_confirmation} />
-                  <div className='error'>
-                    {this.state.errors['password_confirmation']}
-                  </div>
-                  <div className='error'>
-                    {this.state.errors['password_confirmation_equal']}
-                  </div>
-                </FormGroup>
-                <Button className="button" onClick={this.handleSubmit}>Sign up</Button>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
-      </Container>
+      <div className='signup'>
+        <Header />
+        <Container>
+          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
+            <Card>
+              <CardHeader>Sign up</CardHeader>
+              <CardBody>
+                <Form>
+                  <FormGroup>
+                    <Label for="username">Username</Label>
+                    <Input
+                        id='username'
+                        name='username'
+                        onChange={this.handleChange}
+                        placeholder="Username"
+                        type='username'
+                        value={this.state.username} />
+                    <div className='error'>
+                      {this.state.errors['username']}
+                    </div>
+                    <div className='error'>
+                      {this.state.errorExist}
+                    </div>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="password">Password</Label>
+                    <Input
+                        id='password'
+                        name='password'
+                        onChange={this.handleChange}
+                        placeholder="Password"
+                        type='password'
+                        value={this.state.password} />
+                    <div className='error'>
+                      {this.state.errors['password']}
+                    </div>
+                    <div className='error'>
+                      {this.state.errors['password_length']}
+                    </div>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="password">Password Confirmation</Label>
+                    <Input
+                        id='password_confirmation'
+                        name='password_confirmation'
+                        onChange={this.handleChange}
+                        placeholder="Password Confirmation"
+                        type='password'
+                        value={this.state.password_confirmation} />
+                    <div className='error'>
+                      {this.state.errors['password_confirmation']}
+                    </div>
+                    <div className='error'>
+                      {this.state.errors['password_confirmation_equal']}
+                    </div>
+                  </FormGroup>
+                  <Button className='signup_button' onClick={this.handleSubmit}>Sign up</Button>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Container>
+      </div>
     );
   }
 }

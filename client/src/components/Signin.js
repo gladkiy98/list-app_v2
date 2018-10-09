@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from './Header';
 import {
   Button,
   Form,
@@ -12,7 +13,8 @@ import {
   Col
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { SMALL_COLUMN_SIZE, SMALL_OFFSET_SIZE } from '../constants/magic-numbers';
+import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
+import axios from 'axios';
 
 class SignIn extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class SignIn extends Component {
     };
   }
 
-  handleValidation = () => {
+  validate = () => {
     let errors = {};
     let formIsValid = true;
 
@@ -44,83 +46,85 @@ class SignIn extends Component {
       errors['password_length'] = 'Password is too short (minimum is 8 characters)';
     }
 
-    this.setState({ errors: errors });
+    this.setState({ errors });
     return formIsValid;
   }
 
   handleChange = (e) => {
     if (this.state.isSubmitted) {
-      this.handleValidation();
+      this.validate();
     }
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = () => {
     this.setState({ isSubmitted: true });
-    if (this.handleValidation()) {
-      event.preventDefault();
-
-      var formData = new FormData();
-      formData.append('username', this.state.username);
-      formData.append('password', this.state.password);
-      fetch('http://localhost:3000/api/tokens',
-        { method: 'POST', body: formData })
-        .then(res => res.json()).then(res =>
-        window.localStorage.setItem('jwt', res.jwt)
-      )
-        .then(() => this.props.history.push('/dashboard'));
+    if (this.validate()) {
+    axios.post('/api/tokens', {
+        username: this.state.username,
+        password: this.state.password
+      })
+      .then(response => window.localStorage.setItem('jwt', response.data.jwt))
+      .then(() => this.props.history.push('/dashboard'));
     }
   }
 
   render() {
     return(
-      <Container>
-        <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE }}>
-          <Card>
-            <CardHeader>Sign in</CardHeader>
-            <CardBody>
-              <Form>
-                <FormGroup>
-                  <Label for="username">Username</Label>
-                  <Input
-                      id='username'
-                      name='username'
-                      onChange={this.handleChange}
-                      placeholder="Username"
-                      type='username'
-                      value={this.state.username} />
-                  <div className='error'>
-                    {this.state.errors['username']}
-                  </div>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="password">Password</Label>
-                  <Input
-                      id='password'
-                      name='password'
-                      onChange={this.handleChange}
-                      placeholder="Password"
-                      type='password'
-                      value={this.state.password} />
-                  <div className='error'>
-                    {this.state.errors['password']}
-                  </div>
-                  <div className='error'>
-                    {this.state.errors['password_length']}
-                  </div>
-                </FormGroup>
-                <Button onClick={this.handleSubmit}>Submit</Button>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
-      </Container>
+      <div className='signin'>
+        <Header />
+        <Container>
+          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
+            <Card>
+              <CardHeader>Sign in</CardHeader>
+              <CardBody>
+                <Form>
+                  <FormGroup>
+                    <Label for="username">Username</Label>
+                    <Input
+                        id='username'
+                        name='username'
+                        onChange={this.handleChange}
+                        placeholder="Username"
+                        type='username'
+                        value={this.state.username} />
+                    <div className='error'>
+                      {this.state.errors['username']}
+                    </div>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="password">Password</Label>
+                    <Input
+                        id='password'
+                        name='password'
+                        onChange={this.handleChange}
+                        placeholder="Password"
+                        type='password'
+                        value={this.state.password} />
+                    <div className='error'>
+                      {this.state.errors['password']}
+                    </div>
+                    <div className='error'>
+                      {this.state.errors['password_length']}
+                    </div>
+                  </FormGroup>
+                  <Button className='button' onClick={this.handleSubmit}>Submit</Button>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Container>
+      </div>
     );
   }
 }
 
 SignIn.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object
+};
+
+SignIn.defaultProps = {
+  history: {}
 };
 
 export default SignIn;

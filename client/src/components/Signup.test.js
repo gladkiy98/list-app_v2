@@ -12,7 +12,7 @@ describe('Signup', function() {
 
  it('should click button with empty fields', () => {
    const wrapper = shallow(<SignUp />);
-   const button = wrapper.find('.button');
+   const button = wrapper.find('.signup_button');
    button.simulate('click');
    expect(wrapper.state('errors')).toEqual({
      'password': 'Password cannot be empty',
@@ -29,7 +29,7 @@ describe('Signup', function() {
       'change',
       {target: {name: 'password_confirmation', value: '12345678'}}
     );
-    const button = wrapper.find('.button');
+    const button = wrapper.find('.signup_button');
     button.simulate('click');
     expect(wrapper.state('errors')).toEqual({
      'password_confirmation_equal': 'Password confirmation must be equal to Password'
@@ -44,7 +44,7 @@ describe('Signup', function() {
       'change',
       {target: {name: 'password_confirmation', value: '12jktuhjnnt'}}
     );
-    const button = wrapper.find('.button');
+    const button = wrapper.find('.signup_button');
     button.simulate('click');
     expect(wrapper.state('isSubmitted')).toEqual(true);
   });

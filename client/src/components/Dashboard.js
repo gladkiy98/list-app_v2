@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from './Header/Header';
+import Header from './Header';
+import ListContainer from './ListContainer';
 
-const Dashboard = () => {
-  return(
-    <div>
-      <Header />
-    </div>
-  );
-};
+const Dashboard = () => (
+  <div className='dashboard'>
+    <Header />
+    <ListContainer />
+  </div>
+);
 
 export default Dashboard;
