@@ -10,8 +10,6 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
 require 'action_cable/engine'
-# require "sprockets/railtie"
-# require "rails/test_unit/railtie"
 
 Bundler.require(*Rails.groups)
 
@@ -26,7 +24,7 @@ module ListAppV2
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins 'http://localhost:4000'
         resource '*', headers: :any, methods: %i[
           delete put patch get post options
         ]

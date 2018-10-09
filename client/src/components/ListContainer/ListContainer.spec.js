@@ -6,11 +6,9 @@ import Adapter from 'enzyme-adapter-react-16';
 import MockAdapter from 'axios-mock-adapter';
 
 configure({ adapter: new Adapter() });
-
 var mock = new MockAdapter(axios);
 
 describe('ListContainer', () => {
-
   afterEach(() => {
     mock.restore();
   });
@@ -21,16 +19,14 @@ describe('ListContainer', () => {
     const p = wrapper.find('#listbutton');
     p.simulate('click');
 
-    mock.onPost('http://localhost:3000/api/lists', {
-      list: { 'title': wrapper.state('title') }
-    })
+    mock.onPost('http://localhost:3000/api/lists', { list: { 'title': wrapper.state('title') } })
     .reply(
       201,
       { id: 1, title: 'Title', user_id: 5 }
     );
 
     axios.post('http://localhost:3000/api/lists', { list: { 'title': wrapper.state('title') } })
-    .then(function(response) {
+    .then((response) => {
       expect(response.data.title).toEqual('Title');
     });
   });

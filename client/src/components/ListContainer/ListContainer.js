@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 import {
   Button,
   Form,
@@ -9,6 +10,7 @@ import {
   Col
 } from 'reactstrap';
 import EditableLabel from 'react-inline-editing';
+import { SIZE_8, SIZE_2 } from '../../constants/magic-numbers';
 
 class ListContainer extends Component{
   constructor(props) {
@@ -21,7 +23,7 @@ class ListContainer extends Component{
 
   componentDidMount() {
     let token = localStorage.getItem('jwt');
-    axios.get('http://localhost:3000/api/lists.json', {
+    axios.get('/api/lists.json', {
       headers: {
         'Authorization' : token
       }
@@ -37,38 +39,41 @@ class ListContainer extends Component{
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  _handleFocus = (list) => (text) => {
+  handleFocus = (list) => (text) => {
     list.title = text;
     let token = localStorage.getItem('jwt');
-    axios.put(`http://localhost:3000/api/lists/${list.id}`, {
-      'title': list.title
-    }, {
-       headers: {
-        'Authorization': token,
-        }} )
-      .then((response) => response);
+    axios.put(`/api/lists/${list.id}`, { 'title': list.title },
+      {
+        headers: {
+          'Authorization': token,
+        }
+      })
+    .then((response) => response);
   }
 
   handleDestroyList = (i, list) => () => {
     const lists = [...this.state.lists];
     lists.splice(i, 1);
-    this.setState({lists: lists});
+    this.setState({ lists });
     let token = localStorage.getItem('jwt');
-    axios.delete(`http://localhost:3000/api/lists/${list.id}`, {
-      headers: {
-        'Authorization' : token
-    }});
+    axios.delete(`/api/lists/${list.id}`,
+      {
+        headers: {
+          'Authorization' : token
+        }
+      }
+    );
   }
 
   handleCreateList = () => {
     let token = localStorage.getItem('jwt');
-    axios.post('http://localhost:3000/api/lists', {
-      list: {
-        'title': this.state.title
+    axios.post('/api/lists', { list: { 'title': this.state.title } },
+      {
+        headers: {
+          'Authorization' : token
+        }
       }
-    }, { headers: {
-      'Authorization' : token
-    }})
+    )
     .then(response => {
       const lists = [ ...this.state.lists, response.data ];
       this.setState({ lists });
@@ -78,7 +83,7 @@ class ListContainer extends Component{
   render() {
     return(
       <Container className='list'>
-        <Col sm={{ size: 8, offset: 2}}>
+        <Col sm={{ size: SIZE_8, offset: SIZE_2 }}>
           <Form>
             <FormGroup>
               <Input
@@ -93,24 +98,24 @@ class ListContainer extends Component{
                 onClick={this.handleCreateList}>Add List</Button>
           </Form>
         </Col>
-        <Col sm={{ size: 8, offset: 2 }}>
-          {this.state.lists.sort((a, b) => b.id - a.id ).map((list, i) => {
+        <Col sm={{ size: SIZE_8, offset: SIZE_2 }}>
+          { _.orderBy(this.state.lists, ['id'], ['desc']).map((list, i) => {
             return (
               <div className="single-list" id='listok' key={list.id}>
-                <EditableLabel onFocusOut={this._handleFocus(list)} text={list.title} />
+                <EditableLabel onFocusOut={this.handleFocus(list)} text={list.title} />
                 <Button
                     onClick={this.handleDestroyList(i, list)}
                     outline
-                    size="sm" >
+                    size="sm">
                   Delete
                 </Button>
               </div>
             );
-          })}
+          }) }
         </Col>
       </Container>
     );
   }
 }
-
+  // this.state.lists.sort((a, b) => b.id - a.id )
 export default ListContainer;

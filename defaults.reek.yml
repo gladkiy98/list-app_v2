@@ -1,0 +1,18 @@
+---
+detectors:
+  FeatureEnvy:
+    exclude:
+      - CreateUsers#change
+      - CreateLists#change
+
+  UncommunicativeVariableName:
+    exclude:
+      - CreateUsers#change
+      - CreateLists#change
+
+  UncommunicativeModuleName:
+    reject:
+      - "/^ListApp$/"
+
+exclude_paths:
+  - vendor

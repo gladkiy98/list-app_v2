@@ -7,7 +7,7 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import { SMALL_COLUMN_SIZE, SMALL_OFFSET_SIZE } from '../../constants/magic-numbers';
+import { SIZE_6, SIZE_3 } from '../../constants/magic-numbers';
 class Welcome extends Component{
   constructor(props) {
     super(props);
@@ -35,7 +35,7 @@ class Welcome extends Component{
           <Col>
             <h1>hello</h1>
           </Col>
-          <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE}}>{this.renderRedirect()}
+          <Col sm={{ size: SIZE_6, offset: SIZE_3}}>{this.renderRedirect()}
             <Button color="secondary" onClick={this.handleRedirect}>
               Signin
             </Button>

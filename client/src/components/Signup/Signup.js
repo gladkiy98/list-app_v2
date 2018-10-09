@@ -15,7 +15,7 @@ import {
   Col
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { SMALL_COLUMN_SIZE, SMALL_OFFSET_SIZE } from '../../constants/magic-numbers';
+import { SIZE_6, SIZE_3 } from '../../constants/magic-numbers';
 
 class SignUp extends Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class SignUp extends Component {
       errors['password_length'] = 'Password is too short (minimum is 8 characters)';
     }
 
-    this.setState({ errors: errors });
+    this.setState({ errors });
     return formIsValid;
   }
 
@@ -74,7 +74,7 @@ class SignUp extends Component {
   handleSubmit = () => {
     this.setState({ isSubmitted: true });
     if (this.handleValidation()) {
-      axios.post('http://localhost:3000/api/users', { user: {
+      axios.post('/api/users', { user: {
         'username': this.state.username,
         'password': this.state.password,
         'password_confirmation': this.state.password_confirmation }
@@ -95,7 +95,7 @@ class SignUp extends Component {
       <div className='signup'>
         <Header />
         <Container>
-          <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE }}>
+          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
             <Card>
               <CardHeader>Sign up</CardHeader>
               <CardBody>

@@ -1,2 +1,4 @@
-export const SMALL_COLUMN_SIZE = '6';
-export const SMALL_OFFSET_SIZE = '3';
+export const SIZE_2 = '2';
+export const SIZE_3 = '3';
+export const SIZE_6 = '6';
+export const SIZE_8 = '8';

@@ -13,7 +13,7 @@ import {
   Col
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { SMALL_COLUMN_SIZE, SMALL_OFFSET_SIZE } from '../../constants/magic-numbers';
+import { SIZE_6, SIZE_3 } from '../../constants/magic-numbers';
 import axios from 'axios';
 
 class SignIn extends Component {
@@ -27,7 +27,7 @@ class SignIn extends Component {
     };
   }
 
-  handleValidation = () => {
+  validate = () => {
     let errors = {};
     let formIsValid = true;
 
@@ -46,21 +46,21 @@ class SignIn extends Component {
       errors['password_length'] = 'Password is too short (minimum is 8 characters)';
     }
 
-    this.setState({ errors: errors });
+    this.setState({ errors });
     return formIsValid;
   }
 
   handleChange = (e) => {
     if (this.state.isSubmitted) {
-      this.handleValidation();
+      this.validate();
     }
     this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = () => {
     this.setState({ isSubmitted: true });
-    if (this.handleValidation()) {
-    axios.post('http://localhost:3000/api/tokens', {
+    if (this.validate()) {
+    axios.post('/api/tokens', {
         username: this.state.username,
         password: this.state.password
       })
@@ -74,7 +74,7 @@ class SignIn extends Component {
       <div className='signin'>
         <Header />
         <Container>
-          <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE }}>
+          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
             <Card>
               <CardHeader>Sign in</CardHeader>
               <CardBody>

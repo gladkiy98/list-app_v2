@@ -5,8 +5,8 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-describe('Header', function() {
-  it('should be selectable by class "header"', function() {
+describe('Header', () => {
+  it('should be selectable by class "header"', () => {
     expect(shallow(<Header />).is('.header')).toBe(true);
   });
 });

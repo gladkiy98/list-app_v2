@@ -34,7 +34,7 @@ class Header extends Component{
 
   componentDidMount() {
     let token = localStorage.getItem('jwt');
-    axios.get('http://localhost:3000/api/users', {
+    axios.get('/api/users', {
       headers: {
         'Authorization' : token
       }

@@ -19,7 +19,6 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 Capybara.javascript_driver = :selenium
-# Capybara.server_port = 3001
 
 Capybara.run_server = true
 Capybara.server_port = 7000

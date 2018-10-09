@@ -6,7 +6,6 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 describe('Signin form', () => {
-
   it('should be selectable by class "signin"', () => {
     expect(shallow(<SignIn />).is('.signin')).toBe(true);
   });

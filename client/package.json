@@ -2,6 +2,11 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:3000"
+    }
+  },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^4.1.3",
@@ -10,6 +15,7 @@
     "enzyme-adapter-react-16": "^1.5.0",
     "jest-cli": "^23.6.0",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.11",
     "lodash-es": "^4.17.11",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

@@ -46,6 +46,9 @@ jobs:
       # run rubocop
       - run: rubocop
 
+      # run reek
+      - run: reek -c defaults.reek.yml
+
       # run tests!
       - run:
           name: run tests
@@ -56,6 +59,10 @@ jobs:
                               --format RspecJunitFormatter \
                               --out /tmp/test-results/rspec.xml \
                               -- $(echo "${TEST_FILES}" | sed -e 's/\n/\\n/' -e 's/ /\ /')
+
+      - run:
+          name: jest
+          command: cd client && npm run test
 
       # run eslint
       - run:

@@ -5,8 +5,8 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-describe('Component', function() {
-  it('should be selectable by class "dashboard"', function() {
+describe('Component', () => {
+  it('should be selectable by class "dashboard"', () => {
     expect(shallow(<Dashboard />).is('.dashboard')).toBe(true);
   });
 });

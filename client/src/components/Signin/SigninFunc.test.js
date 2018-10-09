@@ -10,7 +10,6 @@ configure({ adapter: new Adapter() });
 var mock = new MockAdapter(axios);
 
 describe('Signin form', () => {
-
   afterEach(() => {
     mock.restore();
   });
@@ -26,14 +25,17 @@ describe('Signin form', () => {
     mock.onPost('http://localhost:3000/api/tokens', {
       username: wrapper.state('username'),
       password: wrapper.state('password')
-    }).reply(200,
-        token
-      );
+    })
+    .reply(
+      200,
+      token
+    );
 
     axios.post('http://localhost:3000/api/tokens', {
       username: wrapper.state('username'),
       password: wrapper.state('password')
-    }).then(function(response) {
+    })
+    .then((response) => {
       expect(response.status).toEqual(200);
       expect(response.data).toEqual('j3g12h3jbjheb1hj2e');
     });

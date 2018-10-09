@@ -7,11 +7,13 @@ class ApplicationController < ActionController::API
 
   private
 
-  def current_user
-    auth_header = request.headers['Authorization']
-    token = auth_header
+  def user_id
+    token = request.headers['Authorization']
     jwt_payload = Auth.decode(token)
-    current_user_id = jwt_payload['id']
-    @current_user ||= User.find(current_user_id)
+    jwt_payload['id']
+  end
+
+  def current_user
+    @current_user ||= User.find(user_id)
   end
 end

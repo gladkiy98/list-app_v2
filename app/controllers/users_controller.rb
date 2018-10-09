@@ -3,8 +3,8 @@
 # create, update & destroy user
 class UsersController < ApplicationController
   def index
-    @user = current_user.username
-    render json: @user
+    user = current_user.username
+    render json: user
   end
 
   def create
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
              status: :ok
     else
       render json: { errors: user.errors.full_messages },
-             status: 422
+             status: :unprocessable_entity
     end
   end
 
