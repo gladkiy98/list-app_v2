@@ -12,9 +12,14 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Container
+  Container,
+  Button
 } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import { setLocale } from '../../actions/changeLocale';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Header extends Component{
   constructor(props) {
@@ -55,35 +60,49 @@ class Header extends Component{
     this.setRedirect();
   }
 
+  handleClickChangeLanguage = (lang) => () => {
+    this.props.setLocale(lang);
+  }
+
   render() {
     return(
       <Navbar color="light" expand="md" light >
-        <Container>
-          <NavbarBrand href="/">List App</NavbarBrand>
+        <Container >
+          <NavbarBrand href="/">
+            <FormattedMessage defaultMessage="Dashboard" id="nav.dashboard" />
+          </NavbarBrand >
           <NavbarToggler onClick={this.handleToggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/">Login</NavLink>
+                <NavLink href="/">
+                  <FormattedMessage defaultMessage="Login" id="nav.login" />
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/">Signin</NavLink>
+                <NavLink href="/">
+                  <FormattedMessage defaultMessage="Signin" id="nav.signin" />
+                </NavLink>
               </NavItem>
               <UncontrolledDropdown inNavbar nav>
                 <DropdownToggle caret nav>
-                  Hi, {this.state.username}
+                  <FormattedMessage defaultMessage="Hi" id="nav.hi" />, {this.state.username}
                 </DropdownToggle>
                 <DropdownMenu id="dropdown" right>
                   <DropdownItem>
-                    Settings
+                    <FormattedMessage defaultMessage="Settings" id="nav.settings" />
                   </DropdownItem>
                   <DropdownItem divider />
                   {this.renderRedirect()}
                   <DropdownItem onClick={this.handleClearStorageAndRedirect}>
-                    Logout
+                    <FormattedMessage defaultMessage="Logout" id="nav.logout" />
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <div className='сhangeLanguage'>
+                <Button onClick={this.handleClickChangeLanguage('en')}>EN</Button>
+                <Button onClick={this.handleClickChangeLanguage('ru')}>RU</Button>
+              </div>
             </Nav>
           </Collapse>
         </Container>
@@ -92,4 +111,18 @@ class Header extends Component{
   }
 }
 
-export default Header;
+Header.propTypes = {
+  setLocale: PropTypes.func
+};
+
+const mapStateToProps = (state) => {
+  return {
+    setLocale: state.locale
+  };
+};
+
+Header.defaultProps = {
+  setLocale: () => {}
+};
+
+export default connect (mapStateToProps, { setLocale })(Header);

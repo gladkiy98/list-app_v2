@@ -82,7 +82,7 @@ class SignUp extends Component {
 
   render() {
     return(
-      <Container>
+      <Container className="signup">
         <Col sm={{ size: SMALL_COLUMN_SIZE, offset: SMALL_OFFSET_SIZE }}>
           <Card>
             <CardHeader>Sign up</CardHeader>
@@ -133,7 +133,7 @@ class SignUp extends Component {
                     {this.state.errors['password_confirmation_equal']}
                   </div>
                 </FormGroup>
-                <Button onClick={this.handleSubmit}>Sign up</Button>
+                <Button className="button" onClick={this.handleSubmit}>Sign up</Button>
               </Form>
             </CardBody>
           </Card>
@@ -144,7 +144,7 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object
 };
 
 export default SignUp;
