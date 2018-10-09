@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Connection
 module ApplicationCable
+  # The Connection class
   class Connection < ActionCable::Connection::Base
   end
 end

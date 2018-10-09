@@ -1,0 +1,6 @@
+!.eslintrc.js
+client/build
+client/node_modules
+app/assets/webpack
+coverage
+client/src/registerServiceWorker

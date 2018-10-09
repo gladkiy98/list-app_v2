@@ -10,27 +10,26 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
 require 'action_cable/engine'
-# require "sprockets/railtie"
-# require "rails/test_unit/railtie"
 
 Bundler.require(*Rails.groups)
 
 module ListAppV2
   # rack cors
   class Application < Rails::Application
+    config.middleware.use ActionDispatch::Flash
+    config.paths.add Rails.root.join('lib').to_s, eager_load: true
     config.load_defaults 5.2
 
     config.generators.system_tests = nil
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins 'http://localhost:4000'
         resource '*', headers: :any, methods: %i[
           delete put patch get post options
         ]
       end
     end
-
     config.api_only = true
   end
 end

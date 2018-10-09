@@ -2,6 +2,11 @@
 
 # create, update & destroy user
 class UsersController < ApplicationController
+  def index
+    user = current_user.username
+    render json: user
+  end
+
   def create
     user = User.new(user_params)
     if user.save
@@ -9,7 +14,7 @@ class UsersController < ApplicationController
              status: :ok
     else
       render json: { errors: user.errors.full_messages },
-             status: :unprocessed_entity
+             status: :unprocessable_entity
     end
   end
 

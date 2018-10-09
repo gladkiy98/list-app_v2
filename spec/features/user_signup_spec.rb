@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe User, js: true do
   it 'signup after create user' do
-    name_pass_and_pass_conf('newexample', 12_345_678, 12_345_678)
-    fill_username_and_password('newexample', 12_345_678)
+    name_pass_and_pass_conf('loles1', 12_345_678, 12_345_678)
+    fill_username_and_password('loles1', 12_345_678)
     expect(page).to have_content('List App')
     find(:css, '.dropdown').click
     click_button 'Logout'

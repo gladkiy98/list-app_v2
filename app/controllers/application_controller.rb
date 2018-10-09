@@ -7,9 +7,13 @@ class ApplicationController < ActionController::API
 
   private
 
-  def encode_token(payload = {})
-    exp = 24.hours.from_now
-    payload[:exp] = exp.to_i
-    JWT.encode(payload, Rails.application.secrets.secret_key_base)
+  def user_id
+    token = request.headers['Authorization']
+    jwt_payload = Auth.decode(token)
+    jwt_payload['id']
+  end
+
+  def current_user
+    @current_user ||= User.find(user_id)
   end
 end
