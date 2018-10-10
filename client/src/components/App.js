@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SignIn from './Signin';
 import SignUp from './Signup';
 import Dashboard from './Dashboard';
-import Welcome from './Welcome';
 import { IntlProvider } from 'react-intl';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,7 +18,6 @@ const App = ({lang}) => {
               <Route component={SignIn} exact path='/'  />
               <Route component={SignUp} exact path='/signup'  />
               <Route component={Dashboard} exact path='/dashboard'  />
-              <Route component={Welcome} exact path='/welcome'  />
             </div>
           </Router>
         </div>
