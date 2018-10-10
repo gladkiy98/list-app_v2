@@ -69,6 +69,12 @@ jobs:
           name: eslint
           command: cd client && npm run eslint
 
+      # deploy to heroku
+      - deploy:
+          name: deploying
+          command: |
+            git push -f https://heroku:fb82039c-b09f-403c-86b6-a7c62fa0b803@git.heroku.com/ancient-fjord-53537.git redux:master
+
       # collect reports
       - store_test_results:
           path: /tmp/test-results

@@ -4,12 +4,14 @@ detectors:
     exclude:
       - CreateUsers#change
       - CreateLists#change
+      - CreateItems#change
 
   UncommunicativeVariableName:
     exclude:
       - CreateUsers#change
       - CreateLists#change
-
+      - CreateItems#change
+      
   UncommunicativeModuleName:
     reject:
       - "/^ListApp$/"

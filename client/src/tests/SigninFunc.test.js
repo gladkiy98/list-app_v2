@@ -19,8 +19,11 @@ describe('Signin form', () => {
     const wrapper = shallow(<SignIn />);
     wrapper.find('#password').simulate('change', { target: { name: 'password', value: '12345678' } });
     wrapper.find('#username').simulate('change', { target: { name: 'username', value: 'user' } });
-    const p = wrapper.find('.button');
-    p.simulate('click');
+    const p = wrapper.find('.signin_button');
+    p.simulate('click', {
+      preventDefault: () => {
+      }
+    });
 
     mock.onPost('http://localhost:3000/api/tokens', {
       username: wrapper.state('username'),

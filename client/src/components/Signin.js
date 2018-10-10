@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Header from './Header';
 import {
-  Button,
   Form,
   FormGroup,
   Label,
@@ -12,9 +10,11 @@ import {
   Container,
   Col
 } from 'reactstrap';
+import Header from './Header';
 import PropTypes from 'prop-types';
 import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
 import axios from 'axios';
+import '../stylesheets/signin.css';
 
 class SignIn extends Component {
   constructor(props) {
@@ -57,7 +57,8 @@ class SignIn extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
     this.setState({ isSubmitted: true });
     if (this.validate()) {
     axios.post('/api/tokens', {
@@ -76,7 +77,7 @@ class SignIn extends Component {
         <Container>
           <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
             <Card>
-              <CardHeader>Sign in</CardHeader>
+              <CardHeader className='signin_header'>Sign in</CardHeader>
               <CardBody>
                 <Form>
                   <FormGroup>
@@ -88,7 +89,7 @@ class SignIn extends Component {
                         placeholder="Username"
                         type='username'
                         value={this.state.username} />
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['username']}
                     </div>
                   </FormGroup>
@@ -101,14 +102,19 @@ class SignIn extends Component {
                         placeholder="Password"
                         type='password'
                         value={this.state.password} />
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password']}
                     </div>
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password_length']}
                     </div>
                   </FormGroup>
-                  <Button className='button' onClick={this.handleSubmit}>Submit</Button>
+                  <button
+                      className='signin_button'
+                      onClick={this.handleSubmit}
+                      type='button'>
+                    Sign in
+                  </button>
                 </Form>
               </CardBody>
             </Card>

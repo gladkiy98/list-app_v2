@@ -7,4 +7,6 @@ Rails.application.routes.draw do
     resources :items
     resources :lists
   end
+
+  get 'api/usernames/:id', to: 'usernames#show_username'
 end

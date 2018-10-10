@@ -2,3 +2,4 @@
 build/service-worker.js
 build
 node_modules
+assetsTransformer.js

@@ -6,20 +6,19 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Container,
-  Button
+  Container
 } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { setLocale } from '../actions/changeLocale';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import '../stylesheets/header.css';
 
 class Header extends Component{
   constructor(props) {
@@ -32,18 +31,21 @@ class Header extends Component{
     };
   }
 
-  componentDidMount() {
-    let token = localStorage.getItem('jwt');
-    axios.get('/api/users', {
-      headers: {
-        'Authorization' : token
-      }
-    })
-    .then(response => {
-      this.setState({
-        username: response.data
+  componentWillMount = (id) => {
+    if (localStorage.getItem('jwt')) {
+      this.setState({ signedIn: true });
+      let token = localStorage.getItem('jwt');
+      axios.get(`/api/usernames/${id}`, {
+        headers: {
+          'Authorization' : token
+        }
+      })
+      .then(response => {
+        this.setState({
+          username: response.data
+        });
       });
-    });
+    }
   }
 
   setRedirect = () => {
@@ -75,24 +77,37 @@ class Header extends Component{
 
   render() {
     return(
-      <Navbar color="light" expand="md" light >
-        <Container >
-          <NavbarBrand href="/">
-            <FormattedMessage defaultMessage="Dashboard" id="nav.dashboard" />
+      <Navbar className='header_navbar' color="light" expand="md" light>
+        <Container>
+          <NavbarBrand>
+            <FormattedMessage defaultMessage="Listup" id="nav.dashboard" />
           </NavbarBrand>
           <NavbarToggler onClick={this.handleToggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/signup">
-                  <FormattedMessage defaultMessage="Login" id="nav.login" />
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/">
-                  <FormattedMessage defaultMessage="Signin" id="nav.signin" />
-                </NavLink>
-              </NavItem>
+              {!this.state.signedIn &&
+              <Nav>
+                <NavItem>
+                  <Link to="/signup">
+                    <button
+                        className='header_signup'
+                        type='button'>
+                      <FormattedMessage defaultMessage="Signup" id="nav.signup" />
+                    </button>
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link to="/">
+                    <button
+                        className='header_signin'
+                        type='button'>
+                      <FormattedMessage defaultMessage="Signin" id="nav.signin" />
+                    </button>
+                  </Link>
+                </NavItem>
+              </Nav>
+              }
+              {this.state.signedIn &&
               <UncontrolledDropdown inNavbar nav>
                 <DropdownToggle caret nav>
                   <FormattedMessage defaultMessage="Hi" id="nav.hi" />, {this.state.username}
@@ -101,6 +116,11 @@ class Header extends Component{
                   <DropdownItem>
                     <FormattedMessage defaultMessage="Settings" id="nav.settings" />
                   </DropdownItem>
+                  <DropdownItem>
+                    <Link className='main_link' to="/dashboard" >
+                      <FormattedMessage defaultMessage="Main" id="nav.mainpage" />
+                    </Link>
+                  </DropdownItem>
                   <DropdownItem divider />
                   {this.renderRedirect()}
                   <DropdownItem onClick={this.handleClearStorageAndRedirect}>
@@ -108,9 +128,20 @@ class Header extends Component{
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              }
               <div className='сhangeLanguage'>
-                <Button onClick={this.handleClickChangeLanguage('en')}>EN</Button>
-                <Button onClick={this.handleClickChangeLanguage('ru')}>RU</Button>
+                <button
+                    className='button_en'
+                    onClick={this.handleClickChangeLanguage('en')}
+                    type='button'>
+                  EN
+                </button>
+                <button
+                    className='button_ru'
+                    onClick={this.handleClickChangeLanguage('ru')}
+                    type='button'>
+                  RU
+                </button>
               </div>
             </Nav>
           </Collapse>

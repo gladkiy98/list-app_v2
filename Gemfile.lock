@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/alexpeattie/heroku_secrets.git
+  revision: 717af8e0acf399bc88d2c8c1a7e230023942af0f
+  specs:
+    heroku_secrets (0.0.2)
+
+GIT
   remote: https://github.com/stympy/faker.git
   revision: e220758871e64b85e799efc6143617b1cb722761
   specs:
@@ -257,6 +263,7 @@ DEPENDENCIES
   factory_bot_rails
   faker!
   foreman
+  heroku_secrets!
   jwt
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)

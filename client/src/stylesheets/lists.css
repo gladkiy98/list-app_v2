@@ -1,0 +1,70 @@
+/* create list button */
+.create_list {
+  border-radius: 4px;
+  color: rgb(51, 133, 255);
+  background-color: inherit;
+  border: 1px solid rgb(51, 133, 255);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 2%;
+  transition: all 0.3s;
+}
+
+.create_list:hover {
+  color: white;
+  cursor: pointer;
+  border-color: rgb(51, 133, 255);
+  background-color: rgb(51, 133, 255);
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
+}
+
+/* table_header */
+.table_header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: rgba(124, 92, 225, 0.6);
+  color: white;
+}
+
+.single_list {
+  transition: all 0.4s;
+  padding-top: 1%;
+  padding-bottom: 2%;
+}
+
+.single_list:hover {
+  background-color: rgb(238, 232, 255);
+  transition: all 0.5s;
+}
+
+.title_label {
+  margin-left: 2%;
+  margin-top: 1%;
+  padding-bottom: 1%;
+}
+
+.delete_list {
+  margin-left: 2%;
+  margin-top: 1%;
+}

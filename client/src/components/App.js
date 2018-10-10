@@ -1,32 +1,33 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import '../App.css';
+import {
+  HashRouter as Router,
+  Route,
+} from 'react-router-dom';
+import { connect } from 'react-redux';
+import messages from './messages';
+import { IntlProvider } from 'react-intl';
 import SignIn from './Signin';
 import SignUp from './Signup';
 import Dashboard from './Dashboard';
-import { IntlProvider } from 'react-intl';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import messages from './messages';
-import '../App.css';
 
-const App = ({lang}) => {
-    return (
-      <IntlProvider locale={lang} messages={messages[lang]}>
+const App = ({ lang }) => {
+  return (
+    <IntlProvider locale={lang} messages={messages[lang]}>
+      <Router>
         <div>
-          <Router>
-            <div>
-              <Route component={SignIn} exact path='/'  />
-              <Route component={SignUp} exact path='/signup'  />
-              <Route component={Dashboard} exact path='/dashboard'  />
-            </div>
-          </Router>
+          <Route component={SignIn} exact path="/" />
+          <Route component={SignUp} path="/signup" />
+          <Route component={Dashboard} path="/dashboard" />
         </div>
-      </IntlProvider>
-    );
+      </Router>
+    </IntlProvider>
+  );
 };
 
 App.propTypes = {
-  lang: PropTypes.string.isRequired
+  lang: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
