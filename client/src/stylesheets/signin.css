@@ -1,0 +1,23 @@
+.signin_header {
+  background-color: rgba(124, 92, 225, 0.6);
+  border: none;
+  color: white;
+}
+
+.signin_button {
+  border-radius: 4px;
+  color: rgba(124, 92, 225, 0.6);
+  background-color: inherit;
+  border: 1px solid rgba(124, 92, 225, 0.6);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s;
+}
+
+.signin_button:hover {
+  color: white;
+  cursor: pointer;
+  background-color: rgba(124, 92, 225, 0.6);
+}

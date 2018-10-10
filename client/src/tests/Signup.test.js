@@ -1,9 +1,13 @@
 import React from 'react';
 import SignUp from '../components/Signup';
-import { configure,shallow } from 'enzyme';
+import axios from 'axios';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import MockAdapter from 'axios-mock-adapter';
 
 configure({ adapter: new Adapter() });
+var mock = new MockAdapter(axios);
+const wrapper = shallow(<SignUp />);
 
 describe('Signup', function() {
  it('should be selectable by class signup', function() {
@@ -11,9 +15,7 @@ describe('Signup', function() {
  });
 
  it('should click button with empty fields', () => {
-   const wrapper = shallow(<SignUp />);
-   const button = wrapper.find('.signup_button');
-   button.simulate('click');
+   wrapper.find('.signup_button').simulate('click', { preventDefault: () => {} });
    expect(wrapper.state('errors')).toEqual({
      'password': 'Password cannot be empty',
      'password_confirmation': 'Password confirmation cannot be empty',
@@ -21,31 +23,43 @@ describe('Signup', function() {
      'username': 'Username cannot be empty'});
   });
 
-  it('password confirmation must be equal to Password', () => {
-    const wrapper = shallow(<SignUp />);
+  it('different passwords', () => {
     wrapper.find('#username').simulate('change', {target: {name: 'username', value: 'user'}});
-    wrapper.find('#password').simulate('change', {target: {name: 'password', value: '12jktuhjnnt'}});
+    wrapper.find('#password').simulate('change', {target: {name: 'password', value: '123456789'}});
     wrapper.find('#password_confirmation').simulate(
       'change',
-      {target: {name: 'password_confirmation', value: '12345678'}}
+      {target: {name: 'password_confirmation', value: '987654321'}}
     );
-    const button = wrapper.find('.signup_button');
-    button.simulate('click');
+    wrapper.find('.signup_button').simulate('click', { preventDefault: () => {} });
     expect(wrapper.state('errors')).toEqual({
-     'password_confirmation_equal': 'Password confirmation must be equal to Password'
-     });
+    'password_confirmation_equal' : 'Password confirmation must be equal to Password' });
    });
 
   it ('should click button with valid data', () => {
-    const wrapper = shallow(<SignUp />);
     wrapper.find('#username').simulate('change', {target: {name: 'username', value: 'user'}});
     wrapper.find('#password').simulate('change', {target: {name: 'password', value: '12jktuhjnnt'}});
     wrapper.find('#password_confirmation').simulate(
       'change',
       {target: {name: 'password_confirmation', value: '12jktuhjnnt'}}
     );
-    const button = wrapper.find('.signup_button');
-    button.simulate('click');
+    wrapper.find('.signup_button').simulate('click', { preventDefault: () => {} });
     expect(wrapper.state('isSubmitted')).toEqual(true);
   });
+
+  describe('test', () => {
+    beforeAll(() => {
+      mock.onPost('/api/users', { user: {
+        'username': wrapper.state('username'),
+        'password': wrapper.state('password'),
+        'password_confirmation': wrapper.state('password_confirmation') }
+      }).reply(200);
+      wrapper.find('.signup_button').simulate('click', { preventDefault: () => {} });
+      wrapper.update(<SignUp />);
+    });
+
+    it('test', () => {
+      expect(wrapper.state('exist')).toBe(true);
+    });
+  });
+
 });

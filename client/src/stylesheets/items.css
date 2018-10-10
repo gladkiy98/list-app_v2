@@ -1,0 +1,89 @@
+/* create item button */
+.create_item {
+  border: 1px solid;
+  border-radius: 4px;
+  color: rgb(51, 133, 255);
+  background-color: inherit;
+  border-color:rgb(51, 133, 255);
+  padding: 4px;
+  margin-left: 2%;
+  margin-top: 1%;
+  transition: all 0.3s;
+}
+
+.create_item:hover {
+  color: white;
+  cursor: pointer;
+  background-color: rgb(51, 133, 255);
+  transition: all 0.3s;
+}
+
+.create_item:focus {
+  outline: none;
+}
+
+/* delete list button */
+.delete_list {
+  border: 1px solid;
+  border-radius: 4px;
+  color: rgba(255, 58, 51, 0.8);
+  background-color: inherit;
+  border-color: rgba(255, 58, 51, 0.8);
+  padding: 4px;
+  margin-left: 2%;
+  margin-top: 1%;
+  transition: all 0.3s;
+}
+
+.delete_list:hover {
+  color: white;
+  cursor: pointer;
+  background-color: rgba(255, 58, 51, 0.8);
+  transition: all 0.3s;
+}
+
+.delete_list:focus {
+  outline: none;
+}
+
+.delete_list:active {
+  background-color: #ffcc5c;
+}
+
+/* table */
+tr {
+  color: black;
+}
+
+.single_list {
+  margin-top: 0;
+}
+
+/* close button */
+.close_button {
+  border: 1px solid;
+  border-radius: 4px;
+  color: rgba(255, 58, 51, 0.8);
+  background-color: inherit;
+  border-color: rgba(255, 58, 51, 0.8);
+  padding: 4px;
+  margin-top: 2%;
+  transition: all 0.3s;
+}
+
+.close_button:hover {
+  color: white;
+  cursor: pointer;
+  background-color: rgba(255, 58, 51, 0.8);
+  transition: all 0.3s;
+}
+
+/* creatable_input */
+.creatable_input {
+  margin-top: 2%;
+}
+
+/* all_items */
+.all_items {
+  margin-top: 1%;
+}

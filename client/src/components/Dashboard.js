@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './Header';
 import ListContainer from './ListContainer';
+import Header from './Header';
 
 const Dashboard = () => (
   <div className='dashboard'>

@@ -17,6 +17,7 @@ gem 'reek'
 gem 'rubocop', require: false
 
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
