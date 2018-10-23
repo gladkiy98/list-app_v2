@@ -7,6 +7,10 @@
       "target": "http://localhost:3000"
     }
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": ["json", "html"]
+  },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^4.1.3",
@@ -33,7 +37,7 @@
     "start": "PORT=4000 react-scripts start",
     "eslint": "eslint --format unix --ext js --ext jsx .",
     "build": "react-scripts build",
-    "test": "jest --config ./jest.config.json",
+    "test": "jest --config ./jest.config.json --coverage",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
