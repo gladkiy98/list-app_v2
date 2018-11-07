@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_181_105_082_010) do
+ActiveRecord::Schema.define(version: 20_181_114_091_058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(version: 20_181_105_082_010) do
     t.integer 'followed_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['followed_id'], name: 'index_follows_on_followed_id'
+    t.index %w[follower_id followed_id], name: 'index_follows_on_follower_id_and_followed_id', unique: true
+    t.index ['follower_id'], name: 'index_follows_on_follower_id'
   end
 
   create_table 'lists', force: :cascade do |t|
@@ -36,6 +39,5 @@ ActiveRecord::Schema.define(version: 20_181_105_082_010) do
     t.string 'password_digest'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.integer 'follow_id', default: [], array: true
   end
 end

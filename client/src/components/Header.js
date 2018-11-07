@@ -41,10 +41,8 @@ class Header extends Component{
           'Authorization' : token
         }
       })
-      .then(response => {
-        this.setState({
-          username: response.data
-        });
+      .then((response) => {
+        this.setState({ username: response.data });
       });
     }
   }
@@ -94,6 +92,11 @@ class Header extends Component{
               </NavItem>
               <NavItem>
                 <NavLink href="/Signup">
+                  Following
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/">
                   <FormattedMessage defaultMessage="Login" id="nav.login" />
                 </NavLink>
               </NavItem>

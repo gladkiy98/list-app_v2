@@ -3,7 +3,6 @@
 # Usernames Controller
 class UsernamesController < ApplicationController
   def show_username
-    user = current_user.username
-    render json: user
+    render json: current_user.username
   end
 end

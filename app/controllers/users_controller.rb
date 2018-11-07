@@ -3,7 +3,7 @@
 # create, update & destroy user
 class UsersController < ApplicationController
   def index
-    users = User.all.where('id NOT IN(?)', current_user.id)
+    users = User.where.not(id: current_user.id)
     render json: users
   end
 

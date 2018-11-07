@@ -2,16 +2,11 @@ import React from 'react';
 import {
   Table
 } from 'reactstrap';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class UserLists extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+class UserLists extends React.PureComponent {
   render() {
     return (
       <div>
@@ -26,9 +21,9 @@ class UserLists extends React.Component {
           <tbody>
             {this.props.list.map((list, i) => {
               return(
-                <tr className="tile" key={list.id} >
+                <tr className="tile" key={list.id}>
                   <td>#{i+1}</td>
-                  <td> {list.title}</td>
+                  <td>{list.title}</td>
                 </tr>
               );
             })}
@@ -38,8 +33,9 @@ class UserLists extends React.Component {
     );
   }
 }
+
 UserLists.propTypes = {
-  list: PropTypes.array.isRequired
+  list: PropTypes.array
 };
 
 function mapStateToProps(state) {

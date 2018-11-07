@@ -1,12 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import {
-  Table,
-  Button
-  } from 'reactstrap';
-import {Link} from 'react-router-dom';
+import { Table,Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import FollowingUsers from './FollowingUsers';
 
-export default class Following extends React.Component {
+export default class Following extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,14 +20,12 @@ export default class Following extends React.Component {
       }
     })
     .then(response => {
-        this.setState({
-          users:response.data
-        });
+      this.setState({ users:response.data });
     });
   }
 
-  handleClick = (i, user) => () =>{
-    const users = [...this.state.users];
+  unFollow = (i, user) => () =>{
+    let users = [...this.state.users];
     users.splice(i, 1);
     this.setState({ users });
     let token = localStorage.getItem('jwt');
@@ -53,15 +49,9 @@ export default class Following extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.users.map((user, i) => {
-              return(
-                <tr className="tile" key={user.id} >
-                  <td>#{i+1}</td>
-                  <td> {user.username}</td>
-                  <td><Button onClick={this.handleClick(i,user)}>Unfollow</Button></td>
-                </tr>
-              );
-            })}
+            {this.state.users.map((user, i) => (
+              <FollowingUsers i={i} key={user.id} unFollow={this.unFollow} user={user} />
+            ))}
           </tbody>
         </Table>
       </div>
