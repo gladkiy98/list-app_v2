@@ -14,7 +14,7 @@ import {
   Container,
   Button
 } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { setLocale } from '../actions/changeLocale';
 import { connect } from 'react-redux';
@@ -32,18 +32,21 @@ class Header extends Component{
     };
   }
 
-  componentDidMount() {
-    let token = localStorage.getItem('jwt');
-    axios.get('/api/users', {
-      headers: {
-        'Authorization' : token
-      }
-    })
-    .then(response => {
-      this.setState({
-        username: response.data
+  componentWillMount = (id) => {
+    if (localStorage.getItem('jwt')) {
+      this.setState({ signedIn: true });
+      let token = localStorage.getItem('jwt');
+      axios.get(`/api/usernames/${id}`, {
+        headers: {
+          'Authorization' : token
+        }
+      })
+      .then(response => {
+        this.setState({
+          username: response.data
+        });
       });
-    });
+    }
   }
 
   setRedirect = () => {
@@ -82,9 +85,15 @@ class Header extends Component{
           </NavbarBrand>
           <NavbarToggler onClick={this.handleToggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
+            <Link to="/follow">Who to follow</Link>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/">
+                <NavLink href="/following">
+                  Followers
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/Signup">
                   <FormattedMessage defaultMessage="Login" id="nav.login" />
                 </NavLink>
               </NavItem>

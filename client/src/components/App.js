@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SignIn from './Signin';
 import SignUp from './Signup';
 import Dashboard from './Dashboard';
-import Welcome from './Welcome';
+import Follow from './Follow';
+import Following from './Following';
+import UserLists from './UserLists';
 import { IntlProvider } from 'react-intl';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,7 +21,9 @@ const App = ({lang}) => {
               <Route component={SignIn} exact path='/'  />
               <Route component={SignUp} exact path='/signup'  />
               <Route component={Dashboard} exact path='/dashboard'  />
-              <Route component={Welcome} exact path='/welcome'  />
+              <Route component={Follow} exact path='/follow'  />
+              <Route component={UserLists} exact path='/userlists'  />
+              <Route component={Following} exact path='/following'  />
             </div>
           </Router>
         </div>
