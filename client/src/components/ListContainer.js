@@ -18,6 +18,9 @@ import {
   TransitionGroup,
 } from 'react-transition-group';
 import api from '../lib/api';
+import store from '../store/store';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class ListContainer extends Component{
   constructor(props) {
@@ -31,9 +34,15 @@ class ListContainer extends Component{
 
   componentDidMount() {
     api.get('lists.json')
+    // .then(response => {
+    //   this.setState({
+    //     lists: response.data
+    //   });
+    // })
     .then(response => {
-      this.setState({
-        lists: response.data
+      store.dispatch({
+        type: 'TEST',
+        list: response.data
       });
     });
   }
@@ -152,7 +161,7 @@ class ListContainer extends Component{
             <Col>Actions</Col>
           </Row>
           <TransitionGroup className="todo-list">
-            {this.state.lists.sort((a, b) => (b.id - a.id)).map((list, i) => (
+            {this.props.list.sort((a, b) => (b.id - a.id)).map((list, i) => (
               <CSSTransition
                   classNames="fade"
                   key={list.id}
@@ -174,4 +183,14 @@ class ListContainer extends Component{
   }
 }
 
-export default ListContainer;
+ListContainer.propTypes = {
+  list: PropTypes.array
+};
+
+const mapStateToProps = (state) => {
+  return {
+    list: state.testReducer.list
+  }
+}
+
+export default connect (mapStateToProps)(ListContainer);

@@ -8,7 +8,7 @@ import MockAdapter from 'axios-mock-adapter';
 configure({ adapter: new Adapter() });
 var mock = new MockAdapter(axios);
 const wrapper = shallow(<SignIn />);
-const response = 'j3g12h3jbjheb1hj2e';
+const response = { jwt: 'j3g12h3jbjheb1hj2e' };
 
 describe('Signin form', () => {
   it('should be selectable by class "signin"', () => {
@@ -41,7 +41,7 @@ describe('Signin form', () => {
     });
 
     it('test', () => {
-      expect(localStorage.getItem('jwt')).toEqual('undefined');
+      expect(localStorage.getItem('jwt')).toEqual('j3g12h3jbjheb1hj2e');
     });
   });
 });

@@ -82,6 +82,7 @@ class SignUp extends Component {
         'password_confirmation': this.state.password_confirmation }
       })
       .catch(error => {
+        console.log(error.response);
         this.setState({ errorExist: error.response.data.errors, exist: false });
       })
       .then(() => {

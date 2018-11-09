@@ -11,6 +11,7 @@ import { IntlProvider } from 'react-intl';
 import SignIn from './Signin';
 import SignUp from './Signup';
 import Dashboard from './Dashboard';
+import TestRedux from './TestRedux';
 
 const App = ({ lang }) => {
   return (
@@ -20,6 +21,7 @@ const App = ({ lang }) => {
           <Route component={SignIn} exact path="/" />
           <Route component={SignUp} path="/signup" />
           <Route component={Dashboard} path="/dashboard" />
+          <Route component={TestRedux} exact path="/redux" />
         </div>
       </Router>
     </IntlProvider>

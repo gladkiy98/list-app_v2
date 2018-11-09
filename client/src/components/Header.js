@@ -17,7 +17,7 @@ import { FormattedMessage } from 'react-intl';
 import { setLocale } from '../actions/changeLocale';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import api from '../lib/api';
 import '../stylesheets/header.css';
 
 class Header extends Component{
@@ -34,12 +34,7 @@ class Header extends Component{
   componentDidMount = (id) => {
     if (localStorage.getItem('jwt')) {
       this.setState({ signedIn: true });
-      let token = localStorage.getItem('jwt');
-      axios.get(`/api/usernames/${id}`, {
-        headers: {
-          'Authorization' : token
-        }
-      })
+      api.get(`usernames/${id}`)
       .then(response => {
         this.setState({
           username: response.data
