@@ -1,4 +1,4 @@
-import { LOCALE_SET } from '../constants/localeSet';
+import { LOCALE_SET } from '../constants/actionTypes';
 
 export const localeSet = (lang) => ({
   type: LOCALE_SET,

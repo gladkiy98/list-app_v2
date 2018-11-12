@@ -1,4 +1,4 @@
-import { LOCALE_SET } from '../constants/localeSet';
+import { LOCALE_SET } from '../constants/actionTypes';
 
 export default function locale(state = { lang: 'en' },action = {}){
   switch(action.type){
