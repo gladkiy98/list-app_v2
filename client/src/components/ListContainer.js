@@ -7,7 +7,6 @@ import {
   Col,
   Row
 } from 'reactstrap';
-import axios from 'axios';
 import { SIZE_8, SIZE_2, SIZE_1, SIZE_3 } from '../constants/magic-numbers';
 import ListItem from './ListItem';
 import 'react-notifications/lib/notifications.css';
@@ -18,9 +17,6 @@ import {
   TransitionGroup,
 } from 'react-transition-group';
 import api from '../lib/api';
-import store from '../store/store';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 class ListContainer extends Component{
   constructor(props) {
@@ -34,15 +30,9 @@ class ListContainer extends Component{
 
   componentDidMount() {
     api.get('lists.json')
-    // .then(response => {
-    //   this.setState({
-    //     lists: response.data
-    //   });
-    // })
     .then(response => {
-      store.dispatch({
-        type: 'TEST',
-        list: response.data
+      this.setState({
+        lists: response.data
       });
     });
   }
@@ -93,14 +83,7 @@ class ListContainer extends Component{
     const lists = [...this.state.lists];
     lists.splice(i, 1);
     this.setState({ lists });
-    let token = localStorage.getItem('jwt');
-    axios.delete(`/api/lists/${list.id}`,
-      {
-        headers: {
-          'Authorization' : token
-        }
-      }
-    )
+    api.destroy(`lists/${list.id}`)
     .then(this.createNotification('delete'));
   }
 
@@ -161,7 +144,7 @@ class ListContainer extends Component{
             <Col>Actions</Col>
           </Row>
           <TransitionGroup className="todo-list">
-            {this.props.list.sort((a, b) => (b.id - a.id)).map((list, i) => (
+            {this.state.lists.sort((a, b) => (b.id - a.id)).map((list, i) => (
               <CSSTransition
                   classNames="fade"
                   key={list.id}
@@ -183,14 +166,4 @@ class ListContainer extends Component{
   }
 }
 
-ListContainer.propTypes = {
-  list: PropTypes.array
-};
-
-const mapStateToProps = (state) => {
-  return {
-    list: state.testReducer.list
-  }
-}
-
-export default connect (mapStateToProps)(ListContainer);
+export default ListContainer;
