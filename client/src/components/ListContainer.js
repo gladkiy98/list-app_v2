@@ -10,22 +10,24 @@ import {
 import { SIZE_8, SIZE_2, SIZE_1, SIZE_3 } from '../constants/magic-numbers';
 import ListItem from './ListItem';
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {
+  NotificationContainer,
+  NotificationManager
+} from 'react-notifications';
 import '../stylesheets/lists.css';
 import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
 import api from '../lib/api';
-import store from '../store/store';
 import { connect } from 'react-redux';
+import * as action from '../actions/listsAction';
 import PropTypes from 'prop-types';
 
 class ListContainer extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      lists: [],
       title: '',
       errors: {}
     };
@@ -34,10 +36,7 @@ class ListContainer extends Component{
   componentDidMount() {
     api.get('lists.json')
     .then(response => {
-      store.dispatch({
-        type: 'LOAD_LISTS',
-        list: response.data
-      });
+      this.props.loadLists(response.data);
     });
   }
 
@@ -84,9 +83,7 @@ class ListContainer extends Component{
   }
 
   handleDestroyList = (i, list) => () => {
-    const lists = [...this.state.lists];
-    lists.splice(i, 1);
-    this.setState({ lists });
+    this.props.destroyList(i);
     api.destroy(`lists/${list.id}`)
     .then(this.createNotification('delete'));
   }
@@ -96,8 +93,7 @@ class ListContainer extends Component{
     if (this.validateList()) {
       api.post('lists', { list: { 'title': this.state.title } })
       .then(response => {
-        const lists = [ ...this.state.lists, response.data ];
-        this.setState({ lists: lists });
+        this.props.addList(response.data);
       })
       .then(this.createNotification('success'));
     }
@@ -171,13 +167,24 @@ class ListContainer extends Component{
 }
 
 ListContainer.propTypes = {
-  lists: PropTypes.array
+  addList: PropTypes.func,
+  destroyList: PropTypes.func,
+  lists: PropTypes.array,
+  loadLists: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
   return {
     lists: state.currentUserLists.lists
-  }
-}
+  };
+};
 
-export default connect (mapStateToProps)(ListContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addList: data => dispatch(action.addList(data)),
+    loadLists: data => dispatch(action.loadLists(data)),
+    destroyList: i => dispatch(action.destroyList(i))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListContainer);

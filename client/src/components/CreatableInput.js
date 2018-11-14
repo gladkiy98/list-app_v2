@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AsyncCreatableSelect from 'react-select/lib/AsyncCreatable';
-import PropTypes from 'prop-types';
 import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
 import '../stylesheets/creatableInput.css';
 import {
-  Col,
-  Row
+  Col
 } from 'reactstrap';
 import api from '../lib/api';
+import { connect } from 'react-redux';
+import * as action from '../actions/itemsAction';
+import PropTypes from 'prop-types';
+import Items from './Items';
 
-export default class CreatableInput extends Component {
+class CreatableInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,9 +27,7 @@ export default class CreatableInput extends Component {
   componentDidMount = () => {
     api.get(`lists/${this.props.list.id}`)
     .then(response => {
-      this.setState({
-        items: response.data
-      });
+      this.props.loadItems(response.data);
     });
   }
 
@@ -64,8 +64,7 @@ export default class CreatableInput extends Component {
       }
     )
     .then(response => {
-      const items = [ ...this.state.items, response.data ];
-      this.setState({ items });
+      this.props.addItem(response.data);
     });
   }
 
@@ -74,9 +73,7 @@ export default class CreatableInput extends Component {
   };
 
   handleDestroyItem = (i, item) => () => {
-    const items = [...this.state.items];
-    items.splice(i, 1);
-    this.setState({ items });
+    this.props.destroyItem(i);
     api.destroy(`items/${item.id}`);
   };
 
@@ -104,25 +101,18 @@ export default class CreatableInput extends Component {
           </button>
         </Col>
         <TransitionGroup className="all_items">
-          {this.state.items.map((item, i) => {
+          {this.props.items.map((item, i) => {
             return(
               <CSSTransition
                   classNames="fade"
                   key={item.id}
                   timeout={700}>
-                <Row className='single_item' key={item.id}>
-                  <Col className='item_content'>
-                    {item.content}
-                  </Col>
-                  <Col sm={{ offset: 1 }}>
-                    <button
-                        className='destroy_item'
-                        onClick={this.handleDestroyItem(i, item)}
-                        type='button'>
-                      Delete
-                    </button>
-                  </Col>
-                </Row>
+                <Items
+                    onHandleDestroyItem={this.handleDestroyItem}
+                    i={i}
+                    key={item.id}
+                    item={item}
+                />
               </CSSTransition>
             );
           })}
@@ -133,5 +123,25 @@ export default class CreatableInput extends Component {
 }
 
 CreatableInput.propTypes = {
-  list: PropTypes.object
+  addItem: PropTypes.func,
+  destroyItem: PropTypes.func,
+  items: PropTypes.array,
+  list: PropTypes.object,
+  loadItems: PropTypes.func
 };
+
+const mapStateToProps = (state) => {
+  return {
+    items: state.currentUserItems.items
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadItems: data => dispatch(action.loadItems(data)),
+    addItem: data => dispatch(action.addItem(data)),
+    destroyItem: index => dispatch(action.destroyItem(index))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatableInput);
