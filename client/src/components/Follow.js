@@ -101,17 +101,13 @@ Follow.propTypes = {
   setLists: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
-  return {
-    list: state.lists.list
-  };
-};
+export const mapStateToProps = (state) => ({
+  list: state.lists.list
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setLists: data => dispatch(action.setLists(data))
-  };
-};
+export const mapDispatchToProps = (dispatch) => ({
+  setLists: data => dispatch(action.setLists(data))
+});
 
 Follow.defaultProps = {
   setLists: () => {}
