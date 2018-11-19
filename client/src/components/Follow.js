@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as action from '../actions/setLists';
+import User from './User';
 
 const searchingFor= term => {
   return function(x){
@@ -40,7 +41,7 @@ export class Follow extends React.Component {
     this.setState({term: event.target.value});
   }
 
-  handleClick = (user) => () => {
+  handleShowLists = (user) => () => {
     let token = localStorage.getItem('jwt');
     axios.get('/api/userlists',{
       params:{
@@ -69,10 +70,10 @@ export class Follow extends React.Component {
 
   render() {
     return (
-      <div className='userLists'>
+      <div>
         <Link to='/dashboard'><Button>Back</Button></Link>
         <form>
-          <input onChange={this.handleSearch} type="text" />
+          <input className='search' onChange={this.handleSearch} type="text" />
         </form>
         <Table>
           <thead>
@@ -84,11 +85,7 @@ export class Follow extends React.Component {
           </thead>
           <tbody>
             {this.state.users.filter(searchingFor(this.state.term)).map((user) => (
-              <tr className="tile" key={user.id} >
-                <td>#{user.id}</td>
-                <td> <Link onClick={this.handleClick(user)} to='/userlist'>{user.username}</Link></td>
-                <td><Button onClick={this.follow(user)}>Follow</Button></td>
-              </tr>
+              <User follow={this.follow} key={user.id} onHandleShowLists={this.handleShowLists} user={user} />
             ))}
           </tbody>
         </Table>
@@ -101,9 +98,11 @@ Follow.propTypes = {
   setLists: PropTypes.func
 };
 
-export const mapStateToProps = (state) => ({
-  list: state.lists.list
-});
+const mapStateToProps = (state) => {
+  return {
+    list: state.lists
+  };
+};
 
 export const mapDispatchToProps = (dispatch) => ({
   setLists: data => dispatch(action.setLists(data))

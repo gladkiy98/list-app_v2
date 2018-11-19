@@ -10,6 +10,7 @@ const user = {
   username: 'Yaroslav',
   created_at: '2018-11-01T11:21:34.751Z',
   updated_at: '2018-11-01T11:21:34.751Z' };
+  
 const unFollow = jest.fn();
 
 const wrapper = shallow(<FollowingUsers i={0} unFollow={unFollow} user={user} />);

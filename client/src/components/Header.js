@@ -20,6 +20,7 @@ import { setLocale } from '../actions/changeLocale';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import * as action from '../actions/changeLocale';
 
 class Header extends Component{
   constructor(props) {
@@ -86,14 +87,9 @@ class Header extends Component{
             <Link to="/follow">Who to follow</Link>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/following">
-                  Followers
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/Signup">
+                <Link to="/following">
                   Following
-                </NavLink>
+                </Link>
               </NavItem>
               <NavItem>
                 <NavLink href="/">
@@ -136,11 +132,13 @@ Header.propTypes = {
   setLocale: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
-  return {
-    setLocale: state.locale
-  };
-};
+ const mapStateToProps = (state) => ({
+  setLocale: state.locale
+});
+
+export const mapDispatchToProps = (dispatch) => ({
+  setLocale: lang => dispatch(action.setLocale(lang))
+});
 
 Header.defaultProps = {
   setLocale: () => {}

@@ -1,5 +1,9 @@
 import * as actions from '../../actions/changeLocale';
 import * as types from '../../constants/localeSet';
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 describe('actions', () => {
   it('should create an action to change a lang', () => {
@@ -8,6 +12,6 @@ describe('actions', () => {
       type: types.LOCALE_SET,
       lang
     };
-    expect(actions.localeSet(lang)).toEqual(expectedAction);
+    expect(actions.setLocale(lang)).toEqual(expectedAction);
   });
 });
