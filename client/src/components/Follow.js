@@ -98,11 +98,9 @@ Follow.propTypes = {
   setLists: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
-  return {
-    list: state.lists
-  };
-};
+const mapStateToProps = (state) => ({
+  list: state.lists
+});
 
 export const mapDispatchToProps = (dispatch) => ({
   setLists: data => dispatch(action.setLists(data))

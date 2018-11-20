@@ -15,15 +15,10 @@ describe('lists reducer', () => {
   });
   it('should handle LISTS_SET', () => {
     expect(
-      reducer([], {
-        type: types.LISTS_SET,
-        list
-      })
-    ).toEqual({ list });
-    expect(
       reducer({ list2 },{
           type: types.LISTS_SET,
           list2
-        })).toEqual({list2});
+      })
+    ).toEqual({list2});
   });
 });

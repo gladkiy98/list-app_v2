@@ -12,7 +12,8 @@ const user = {
   id: 173,
   username: 'Yaroslav',
   created_at: '2018-11-01T11:21:34.751Z',
-  updated_at: '2018-11-01T11:21:34.751Z' };
+  updated_at: '2018-11-01T11:21:34.751Z'
+};
 const wrapper = shallow(<Following />);
 const func = wrapper.instance();
 const componentDidMount = jest.spyOn(func, 'componentDidMount');
@@ -32,7 +33,7 @@ describe('Component Following', () => {
 
 describe('Component Following', () => {
   beforeAll(() => {
-    mock.onGet('/api/follows').reply(200, user);
+    mock.onGet('/api/follows').reply(200, {});
     wrapper.instance().componentDidMount();
     wrapper.update(<Following />);
   });

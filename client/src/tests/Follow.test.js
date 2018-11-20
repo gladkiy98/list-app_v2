@@ -28,7 +28,8 @@ const list2 = {
   title: 'Title',
   user_id: 173,
   created_at: '2018-10-30T11:38:55.450Z',
-  updated_at: '2018-10-30T11:38:55.450Z' };
+  updated_at: '2018-10-30T11:38:55.450Z'
+};
 
 configure({ adapter: new Adapter() });
 

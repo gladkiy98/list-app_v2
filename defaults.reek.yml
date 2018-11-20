@@ -3,9 +3,9 @@ detectors:
   TooManyStatements:
     enabled: true
     exclude:
-    - CreateFollows#change
-    max_statements: 10
-    
+      - CreateFollows#change
+    max_statements: 5
+
   FeatureEnvy:
     exclude:
       - CreateUsers#change
