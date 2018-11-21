@@ -50,7 +50,11 @@ export default class Following extends React.PureComponent {
           </thead>
           <tbody>
             {this.state.users.map((user, i) => (
-              <FollowingUsers i={i} key={user.id} unFollow={this.unFollow} user={user} />
+              <FollowingUsers
+                  i={i}
+                  key={user.id}
+                  unFollow={this.unFollow}
+                  user={user} />
             ))}
           </tbody>
         </Table>

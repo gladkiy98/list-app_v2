@@ -7,7 +7,7 @@ describe('locale reducer', () => {
     expect(reducer(undefined, {})).toEqual({ lang });
   });
 
-  it('should change language to Russian  ', () => {
+  it('should change language to Russian', () => {
     const lang = 'ru';
     expect(
       reducer(lang, {
@@ -17,7 +17,7 @@ describe('locale reducer', () => {
     ).toEqual({ lang });
   });
 
-  it('should change language to English  ', () => {
+  it('should change language to English', () => {
     const lang = 'en';
     expect(
       reducer(lang, {

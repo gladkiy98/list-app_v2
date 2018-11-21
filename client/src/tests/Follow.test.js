@@ -4,25 +4,26 @@ import Adapter from 'enzyme-adapter-react-16';
 import MockAdapter from 'axios-mock-adapter';
 import { Follow } from '../components/Follow';
 import axios from 'axios';
-import store from '../store/store';
 import FollowContainer from '../components/Follow';
 import configureMockStore from 'redux-mock-store';
 import { mapDispatchToProps } from '../components/Follow';
 
 const mockStore = configureMockStore();
 
-const user = {
-  id: 173,
-  username: 'Yaroslav',
-  created_at: '2018-11-01T11:21:34.751Z',
-  updated_at: '2018-11-01T11:21:34.751Z' };
-
-const user2 = {
-  id: 69,
-  username: 'Vlad',
-  created_at: '2018-10-01T11:21:34.751Z',
-  updated_at: '2018-10-01T11:21:34.751Z' };
-
+const user = [
+  {
+    id: 173,
+    username: 'Yaroslav',
+    created_at: '2018-11-01T11:21:34.751Z',
+    updated_at: '2018-11-01T11:21:34.751Z'
+  },
+  {
+    id: 69,
+    username: 'Vlad',
+    created_at: '2018-10-01T11:21:34.751Z',
+    updated_at: '2018-10-01T11:21:34.751Z'
+  }
+];
 const list2 = {
   id: 558,
   title: 'Title',
@@ -34,16 +35,15 @@ const list2 = {
 configure({ adapter: new Adapter() });
 
 var mock = new MockAdapter(axios);
-const wrapper = shallow(<Follow store={store} />);
+const wrapper = shallow(<Follow />);
 const func = wrapper.instance();
 const follow = jest.spyOn(func, 'follow');
 const componentDidMount = jest.spyOn(func, 'componentDidMount');
 const handleShowLists = jest.spyOn(func, 'handleShowLists');
 
-
 describe('Component Following', () => {
   beforeAll(() => {
-    mock.onPost('/api/follows').reply(200, user2);
+    mock.onPost('/api/follows').reply(200, user[1]);
     wrapper.instance().follow(user)();
     wrapper.update(<Follow />);
   });
@@ -55,13 +55,18 @@ describe('Component Following', () => {
 
 describe('Component Following', () => {
   beforeAll(() => {
-    mock.onGet('/api/users.json').reply(200, user2);
+    mock.onGet('/api/users.json').reply(200, user);
     wrapper.instance().componentDidMount();
     wrapper.update(<Follow  />);
   });
 
   it('call function componentDidMount', () => {
     expect(componentDidMount).toHaveBeenCalled();
+  });
+
+  it('call function componentDidMount', () => {
+    expect(wrapper.state().users[0].username).toEqual('Yaroslav');
+    expect(wrapper.state().users).toEqual(user);
   });
 });
 
@@ -86,7 +91,7 @@ describe('Component Follow', () => {
 describe('Component Following', () => {
   beforeAll(() => {
     mock.onGet('/api/userlists').reply(200, list2);
-    wrapper.instance().handleShowLists(user.username)();
+    wrapper.instance().handleShowLists(user[0].username)();
     wrapper.update(<Follow />);
   });
 
@@ -98,5 +103,12 @@ describe('Component Following', () => {
     const dispatch = jest.fn();
     mapDispatchToProps(dispatch).setLists();
     expect(dispatch.mock.calls[0][0]).toEqual({ type: 'LISTS_SET'});
+  });
+});
+
+describe('Component Following', () => {
+  it('work search users', () => {
+    wrapper.find('input').at(0).simulate('change', { target: { value: 'vtstepura' }});
+    expect(wrapper.state().term).toEqual('vtstepura');
   });
 });

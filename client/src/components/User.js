@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const User = (props) => {
   return (
-    <tr key={props.key} >
+    <tr >
       <td>#{props.user.id}</td>
       <td>
         <Link
@@ -22,7 +22,6 @@ const User = (props) => {
 
 User.propTypes = {
   follow: PropTypes.func,
-  key: PropTypes.number,
   onHandleShowLists: PropTypes.func,
   user: PropTypes.object
 };

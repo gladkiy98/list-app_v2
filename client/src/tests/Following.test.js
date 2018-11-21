@@ -8,12 +8,12 @@ import MockAdapter from 'axios-mock-adapter';
 configure({ adapter: new Adapter() });
 var mock = new MockAdapter(axios);
 
-const user = {
+const user = [{
   id: 173,
   username: 'Yaroslav',
   created_at: '2018-11-01T11:21:34.751Z',
   updated_at: '2018-11-01T11:21:34.751Z'
-};
+}];
 const wrapper = shallow(<Following />);
 const func = wrapper.instance();
 const componentDidMount = jest.spyOn(func, 'componentDidMount');
@@ -33,12 +33,13 @@ describe('Component Following', () => {
 
 describe('Component Following', () => {
   beforeAll(() => {
-    mock.onGet('/api/follows').reply(200, {});
+    mock.onGet('/api/follows').reply(200, user);
     wrapper.instance().componentDidMount();
     wrapper.update(<Following />);
   });
 
   it('call function componentDidMount', () => {
     expect(componentDidMount).toHaveBeenCalled();
+    expect(wrapper.state().users).toEqual(user);
   });
 });

@@ -85,7 +85,11 @@ export class Follow extends React.Component {
           </thead>
           <tbody>
             {this.state.users.filter(searchingFor(this.state.term)).map((user) => (
-              <User follow={this.follow} key={user.id} onHandleShowLists={this.handleShowLists} user={user} />
+              <User
+                  follow={this.follow}
+                  key={user.id}
+                  onHandleShowLists={this.handleShowLists}
+                  user={user} />
             ))}
           </tbody>
         </Table>
