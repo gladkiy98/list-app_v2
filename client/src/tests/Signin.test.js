@@ -16,7 +16,7 @@ describe('Signin form', () => {
   });
 
   it('should click button with empty fields', () => {
-    wrapper.find('.signin_button').simulate('click', { preventDefault: () => {} });
+    wrapper.find('.signin-button').simulate('click', { preventDefault: () => {} });
     expect(wrapper.state('errors')).toEqual({
       'password': 'Password cannot be empty',
       'password_length': 'Password is too short (minimum is 8 characters)',
@@ -26,7 +26,7 @@ describe('Signin form', () => {
   it('handleChange', () => {
     wrapper.find('#password').simulate('change', { target: { name: 'password', value: '12345678' } });
     wrapper.find('#username').simulate('change', { target: { name: 'username', value: 'username' } });
-    wrapper.find('.signin_button').simulate('click', { preventDefault: () => {} });
+    wrapper.find('.signin-button').simulate('click', { preventDefault: () => {} });
     expect(wrapper.state('errors')).toEqual({});
   });
 
@@ -36,7 +36,7 @@ describe('Signin form', () => {
         username: wrapper.state('username'),
         password: wrapper.state('password') })
       .reply(200, response);
-      wrapper.find('.signin_button').simulate('click', { preventDefault: () => {} });
+      wrapper.find('.signin-button').simulate('click', { preventDefault: () => {} });
       wrapper.update(<SignIn />);
     });
 

@@ -2,8 +2,7 @@
 
 # Username controller
 class UsernamesController < ApplicationController
-  def show_username
-    user = current_user.username
-    render json: user
+  def index
+    render json: current_user.username, status: :ok
   end
 end

@@ -3,7 +3,8 @@
 # List Controller
 class ItemsController < ApplicationController
   def index
-    items = Item.select(:content).distinct.where('content LIKE ?', "%#{params[:inputValue]}%").pluck(:content)
+    content = 'content LIKE ?', "%#{params[:inputValue]}%"
+    items = Item.select(:content).distinct.where(content).pluck(:content).last(10)
     render json: items, status: :ok
   end
 
@@ -35,7 +36,7 @@ class ItemsController < ApplicationController
   private
 
   def item
-    @item = Item.find(params[:id])
+    @item ||= Item.find(params[:id])
   end
 
   def list

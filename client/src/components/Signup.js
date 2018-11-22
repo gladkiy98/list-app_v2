@@ -15,8 +15,8 @@ import {
 import Header from './Header';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
-import '../stylesheets/signup.css';
+import * as size from '../constants/magicNumbers';
+import '../stylesheets/signup.scss';
 
 class SignUp extends Component {
   constructor(props) {
@@ -26,7 +26,6 @@ class SignUp extends Component {
       password: '',
       password_confirmation: '',
       errors: {},
-      isSubmitted: false,
       errorExist: '',
       exist: true
     };
@@ -66,15 +65,11 @@ class SignUp extends Component {
   }
 
   handleChange = (e) => {
-    if (this.state.isSubmitted) {
-      this.handleValidation();
-    }
-    this.setState({ [e.target.name]: e.target.value, exist: true, errorExist: ''});
+    this.setState({ [e.target.name]: e.target.value, exist: true, errorExist: '', errors: { [e.target.name]: null } });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({ isSubmitted: true });
     if (this.handleValidation()) {
       axios.post('/api/users', { user: {
         'username': this.state.username,
@@ -97,9 +92,9 @@ class SignUp extends Component {
       <div className='signup'>
         <Header />
         <Container>
-          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
+          <Col sm={{ size: size.SIZE_6, offset: size.SIZE_3 }}>
             <Card>
-              <CardHeader className='signup_header'>
+              <CardHeader className='signup-header'>
                 <FormattedMessage defaultMessage="Sign up" id="nav.signup" />
               </CardHeader>
               <CardBody>
@@ -159,7 +154,7 @@ class SignUp extends Component {
                     </div>
                   </FormGroup>
                   <button
-                      className='signup_button'
+                      className='signup-button'
                       onClick={this.handleSubmit}
                       type='button'>
                     <FormattedMessage defaultMessage="Sign up" id="nav.signup" />

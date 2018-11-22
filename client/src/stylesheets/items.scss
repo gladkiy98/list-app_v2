@@ -1,53 +1,49 @@
+@import 'colors';
+
 /* create item button */
-.create_item {
+.create-item {
   border: 1px solid;
   border-radius: 4px;
-  color: rgb(51, 133, 255);
+  color: $create-color;
   background-color: inherit;
-  border-color:rgb(51, 133, 255);
+  border-color: $create-color;
   padding: 4px;
-  margin-left: 2%;
-  margin-top: 1%;
   transition: all 0.3s;
 }
 
-.create_item:hover {
+.create-item:hover {
   color: white;
   cursor: pointer;
-  background-color: rgb(51, 133, 255);
+  background-color: $create-color;
   transition: all 0.3s;
 }
 
-.create_item:focus {
+.create-item:focus {
   outline: none;
 }
 
 /* delete list button */
-.delete_list {
+.delete-list {
   border: 1px solid;
   border-radius: 4px;
-  color: rgba(255, 58, 51, 0.8);
+  color: $destroy-color;
   background-color: inherit;
-  border-color: rgba(255, 58, 51, 0.8);
+  border-color: $destroy-color;
   padding: 4px;
   margin-left: 2%;
   margin-top: 1%;
   transition: all 0.3s;
 }
 
-.delete_list:hover {
+.delete-list:hover {
   color: white;
   cursor: pointer;
-  background-color: rgba(255, 58, 51, 0.8);
+  background-color: $destroy-color;
   transition: all 0.3s;
 }
 
-.delete_list:focus {
+.delete-list:focus {
   outline: none;
-}
-
-.delete_list:active {
-  background-color: #ffcc5c;
 }
 
 /* table */
@@ -55,35 +51,34 @@ tr {
   color: black;
 }
 
-.single_list {
+.single-list {
   margin-top: 0;
 }
 
 /* close button */
-.close_button {
+.close-button {
   border: 1px solid;
   border-radius: 4px;
-  color: rgba(255, 58, 51, 0.8);
+  color: $destroy-color;
   background-color: inherit;
-  border-color: rgba(255, 58, 51, 0.8);
+  border-color: $destroy-color;
   padding: 4px;
-  margin-top: 2%;
   transition: all 0.3s;
 }
 
-.close_button:hover {
+.close-button:hover {
   color: white;
   cursor: pointer;
-  background-color: rgba(255, 58, 51, 0.8);
+  background-color: $destroy-color;
   transition: all 0.3s;
 }
 
 /* creatable_input */
-.creatable_input {
+.creatable-input {
   margin-top: 2%;
 }
 
 /* all_items */
-.all_items {
+.all-items {
   margin-top: 1%;
 }

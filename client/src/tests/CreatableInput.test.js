@@ -31,61 +31,65 @@ const wrapper = shallow(
   <CreatableInput
       createNotification={createNotification}
       list={list} />);
+const wrapper2 = shallow(
+  <CreatableInput
+      createNotification={createNotification}
+      list={list} />);
 const instance = wrapper.instance();
 const handleChange = jest.spyOn(instance, 'handleChange');
-const handleCreate = jest.spyOn(instance, 'handleCreateItem');
+const handleKeyDown = jest.spyOn(instance, 'handleKeyDown');
 const createNotification = jest.fn();
 
 describe('CreatableInput', () => {
   it('should call `handleChange`', () => {
-    wrapper.find('.async_creatable').simulate('change', 'I' );
+    wrapper.setState({ selectedOption: { label: 'I', value: 'I' } });
+    wrapper.find('.async-creatable').simulate('change',
+      { target: { name: 'selectedOption', value: wrapper.state('selectedOption').value} }
+    );
     expect(handleChange).toHaveBeenCalled();
   });
 
   describe('handleCreateItem', () => {
     beforeAll(() => {
-      wrapper.setState({ selectedOption: { label: 'I', value: 'I' } });
-      mock.onPost('/api/items', { 'content': wrapper.state('selectedOption').value, list_id: 558 } ).reply(201, item);
-      wrapper.find('.create_item').simulate('click', { preventDefault: () => {} });
-      wrapper.update(<CreatableInput />);
+      wrapper2.setState({ selectedOption: { label: 'I', value: 'I' } });
+      mock.onPost('/api/items', { 'content': wrapper2.state('selectedOption').value, list_id: 558 } ).reply(201, item);
+      wrapper2.instance().handleCreateItem({ preventDefault: () => {} });
+      wrapper2.update(<CreatableInput />);
     });
 
     it('shoud setState `items`', () => {
-      expect(wrapper.state().items).toEqual([item]);
+      expect(wrapper2.state().items).toEqual([item]);
     });
   });
 
   describe('keydown', () => {
     beforeAll(() => {
+      wrapper.setState({ selectedOption: { label: 'I', value: 'I' } });
       mock.onPost('/api/items', { 'content': wrapper.state('selectedOption').value, list_id: 558 } ).reply(201, item2);
-      wrapper.find('.async_creatable').simulate('click');
-      wrapper.find('.async_creatable').simulate('keyDown', { keyCode: 13 });
+      wrapper.find('.async-creatable').simulate('click');
+      wrapper.find('.async-creatable').simulate('keyDown', { keyCode: 13 });
       wrapper.update(<CreatableInput />);
     });
 
-    it('shoud setState `items`', () => {
-      expect(handleCreate).toHaveBeenCalled();
+    it('have been called', () => {
+      expect(handleKeyDown).toHaveBeenCalled();
     });
   });
 
   describe('promiseOptions', () => {
     beforeAll(() => {
-      mock.onPost('/api/items', { params: 'i' }).reply(200, {label: 'item', value: 'item'});
-      wrapper.instance().promiseOptions('i', {label: 'item', value: 'item'});
-      wrapper.find('.async_creatable').simulate('click');
-      wrapper.find('.async_creatable').simulate('change', 'i');
+      mock.onPost('/api/items', { params: 'i' }).reply(200, { label: 'item', value: 'item' });
+      wrapper.instance().loadOptions('i', { label: 'item', value: 'item' });
+      wrapper.find('.async-creatable').simulate('click');
+      wrapper.find('.async-creatable').simulate('change', 'i');
       wrapper.update(<CreatableInput />);
-    });
-
-    it('test', () => {
-
     });
   });
 
   describe('handleDestroyItem', () => {
     beforeAll(() => {
       mock.onDelete('/api/items/173', {}).reply(204, {});
-      wrapper.find('.destroy_item').simulate('click', { preventDefault: () => {} });
+      wrapper.instance().handleDestroyItem(1, item);
       wrapper.update(<CreatableInput />);
     });
 
@@ -99,10 +103,6 @@ describe('CreatableInput', () => {
       mock.onGet('/api/lists/558').reply(204, item2);
       wrapper.instance().componentDidMount();
       wrapper.update(<CreatableInput />);
-    });
-
-    it('shoult destroy item', () => {
-
     });
   });
 });

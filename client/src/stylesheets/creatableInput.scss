@@ -1,0 +1,58 @@
+@import 'colors';
+
+.destroy-item {
+  border: 1px solid;
+  border-radius: 4px;
+  color: $destroy-color;
+  background-color: inherit;
+  border-color: $destroy-color;
+  padding: 4px;
+  margin-top: 1%;
+  margin-right: 10px;
+  transition: all 0.3s;
+}
+
+.destroy-item:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $destroy-color;
+  transition: all 0.3s;
+}
+
+.item-content {
+  margin-top: 5px;
+}
+
+.single-item {
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-bottom: 4px;
+  transition: all 0.5s;
+}
+
+.single-item:hover {
+  background-color: white;
+  border-radius: 5px;
+  transition: all 0.5s;
+}
+
+.new-item {
+  border-radius: 4px;
+  color: $create-color;
+  background-color: inherit;
+  border: 1px solid $create-color;
+  margin-top: 1px;
+  margin-left: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s;
+}
+
+.new-item:hover {
+  color: white;
+  cursor: pointer;
+  border-color: $create-color;
+  background-color: $create-color;
+}

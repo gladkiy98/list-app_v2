@@ -1,14 +1,16 @@
-.signin_header {
-  background-color: rgba(124, 92, 225, 0.6);
+@import 'colors';
+
+.signup-header {
+  background-color: $main-purple-color;
   border: none;
   color: white;
 }
 
-.signin_button {
+.signup-button {
   border-radius: 4px;
-  color: rgba(124, 92, 225, 0.6);
+  color: $main-purple-color;
   background-color: inherit;
-  border: 1px solid rgba(124, 92, 225, 0.6);
+  border: 1px solid $main-purple-color;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 15px;
@@ -16,8 +18,8 @@
   transition: all 0.3s;
 }
 
-.signin_button:hover {
+.signup-button:hover {
   color: white;
   cursor: pointer;
-  background-color: rgba(124, 92, 225, 0.6);
+  background-color: $main-purple-color;
 }

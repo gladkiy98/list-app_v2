@@ -4,10 +4,10 @@ import {
   Row
 } from 'reactstrap';
 import EditableLabel from 'react-inline-editing';
-import { SIZE_8, SIZE_2, SIZE_1, SIZE_3 } from '../constants/magic-numbers';
+import * as size from '../constants/magicNumbers';
 import PropTypes from 'prop-types';
 import { FormattedDate } from 'react-intl';
-import '../stylesheets/items.css';
+import '../stylesheets/items.scss';
 import CreatableInput from './CreatableInput';
 
 class ListItem extends Component{
@@ -19,61 +19,58 @@ class ListItem extends Component{
     };
   }
 
-  handleCreateItemForm = () => {
-    this.setState({ open: true });
-  }
-
-  handleClose = () => {
-    this.setState({ open: false });
+  handleOpen = (param = false) => () => {
+    this.setState({ open: param });
   }
 
   render() {
     return(
-      <Row className="single_list" key={this.props.list.id}>
-        <Col sm={{ size: SIZE_1 }}>
-          {this.props.i + 1}
+      <Row className="single-list">
+        <Col sm={{ size: size.SIZE_1 }}>
+          {this.props.index + 1}
         </Col>
-        <Col sm={{ size: SIZE_3 }}>
-          <div className='title_label'>
+        <Col sm={{ size: size.SIZE_3 }}>
+          <div className='title-label'>
             <EditableLabel onFocusOut={this.props.onHandleFocus(this.props.list)} text={this.props.list.title} />
           </div>
         </Col>
         <Col>
-          <div className='create_date'>
+          <div className='create-date'>
             <FormattedDate
                 day="numeric"
                 month="long"
-                value={new Date(this.props.list.created_at)}
+                value={new Date(this.props.list.createdAt)}
                 year="numeric" />
           </div>
         </Col>
         <Col>
+          {!this.state.open ?
+            <button
+                className='create-item'
+                onClick={this.handleOpen(true)}
+                type='button'>
+              + item
+            </button> :
+            <button
+                className='close-button'
+                onClick={this.handleOpen(false)}
+                type='button'>
+              close
+            </button> }
           <button
-              className='create_item'
-              onClick={this.handleCreateItemForm}
-              type='button'>
-            + item
-          </button>
-          <button
-              className='delete_list'
-              onClick={this.props.onHandleDestroyList(this.props.i, this.props.list)}
+              className='delete-list'
+              onClick={this.props.onHandleDestroyList(this.props.index, this.props.list)}
               type='button'>
             - list
           </button>
         </Col>
         {this.state.open &&
-        <Col className='open_item' sm={{ size: SIZE_8, offset: SIZE_2 }}>
-          <div className='creatable_input'>
+        <Col className='open-item' sm={{ size: size.SIZE_8, offset: size.SIZE_2 }}>
+          <div className='creatable-input'>
             <CreatableInput
                 createNotification={this.props.createNotification}
                 list={this.props.list} />
           </div>
-          <button
-              className='close_button'
-              onClick={this.handleClose}
-              type='button'>
-              Close
-          </button>
         </Col>
         }
       </Row>
@@ -83,7 +80,7 @@ class ListItem extends Component{
 
 ListItem.propTypes = {
   createNotification: PropTypes.func,
-  i: PropTypes.number,
+  index: PropTypes.number,
   list: PropTypes.object,
   onHandleDestroyList: PropTypes.func,
   onHandleFocus: PropTypes.func

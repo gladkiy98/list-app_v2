@@ -1,13 +1,15 @@
-.header_navbar {
+@import 'colors';
+
+.header-navbar {
   margin-bottom: 20px;
 }
 
 /* header signup_button */
-.header_signup {
+.header-signup {
   border-radius: 4px;
-  color: rgba(124, 92, 225, 0.6);
+  color: $main-purple-color;
   background-color: inherit;
-  border: 1px solid rgba(124, 92, 225, 0.6);
+  border: 1px solid $main-purple-color;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 15px;
@@ -15,18 +17,18 @@
   transition: all 0.3s;
 }
 
-.header_signup:hover {
+.header-signup:hover {
   color: white;
   cursor: pointer;
-  background-color: rgba(124, 92, 225, 0.6);
+  background-color: $main-purple-color;
 }
 
 /* header signin_button */
-.header_signin {
+.header-signin {
   border-radius: 4px;
-  color: rgba(124, 92, 225, 0.6);
+  color: $main-purple-color;
   background-color: inherit;
-  border: 1px solid rgba(124, 92, 225, 0.6);
+  border: 1px solid $main-purple-color;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 15px;
@@ -35,18 +37,18 @@
   margin-right: 10px;
 }
 
-.header_signin:hover {
+.header-signin:hover {
   color: white;
   cursor: pointer;
-  background-color: rgba(124, 92, 225, 0.6);
+  background-color: $main-purple-color;
 }
 
 /* change language buttons */
-.button_ru {
+.button-ru {
   border-radius: 4px;
-  color: rgba(124, 92, 225, 0.6);
+  color: $main-purple-color;
   background-color: inherit;
-  border: 1px solid rgba(124, 92, 225, 0.6);
+  border: 1px solid $main-purple-color;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 15px;
@@ -54,17 +56,17 @@
   transition: all 0.3s;
 }
 
-.button_ru:hover {
+.button-ru:hover {
   color: white;
   cursor: pointer;
-  background-color: rgba(124, 92, 225, 0.6);
+  background-color: $main-purple-color;
 }
 
-.button_en {
+.button-en {
   border-radius: 4px;
-  color: rgba(124, 92, 225, 0.6);
+  color: $main-purple-color;
   background-color: inherit;
-  border: 1px solid rgba(124, 92, 225, 0.6);
+  border: 1px solid $main-purple-color;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 15px;
@@ -72,8 +74,8 @@
   transition: all 0.3s;
 }
 
-.button_en:hover {
+.button-en:hover {
   color: white;
   cursor: pointer;
-  background-color: rgba(124, 92, 225, 0.6);
+  background-color: $main-purple-color;
 }

@@ -17,23 +17,11 @@ const wrapper = mount(
 describe('Header', () => {
   describe('buttons', () => {
     it('signin', () => {
-      wrapper.find('.header_signin').simulate('click');
+      wrapper.find('.header-signin').simulate('click');
     });
 
     it('signup', () => {
-      wrapper.find('.header_signup').simulate('click');
-    });
-  });
-
-  describe('tokens', () => {
-    beforeAll(() => {
-      localStorage.setItem('jwt', 'newtoken');
-      // const token = localStorage.getItem('jwt');
-      wrapper.update();
-    });
-
-    it('test', () => {
-
+      wrapper.find('.header-signup').simulate('click');
     });
   });
 });

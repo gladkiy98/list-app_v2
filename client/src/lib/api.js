@@ -1,34 +1,36 @@
-import axios from 'axios';
+import Manager from './manager';
 
 class API {
-  baseOptions = (method) => {
-    return {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization' : localStorage.getItem('jwt')
-      }
-    };
-  };
-
-  axiosReq(url, options) {
-    return axios(`/api/${url}`, options);
+  getList(id) {
+    return Manager.get(`lists/${id}`);
   }
 
-  get(url) {
-    return this.axiosReq(url, this.baseOptions('GET'));
+  getLists() {
+    return Manager.get('lists');
   }
 
-  post(url, data) {
-    return this.axiosReq(url, { ...this.baseOptions('POST'), data });
+  postList(data) {
+    return Manager.post('lists', data);
   }
 
-  put(url, data) {
-    return this.axiosReq(url, { ...this.baseOptions('PUT'), data });
+  putList(id, data) {
+    return Manager.put(`lists/${id}`, data);
   }
 
-  destroy(url) {
-    return this.axiosReq(url, this.baseOptions('DELETE'));
+  destroyList(id) {
+    return Manager.destroy(`lists/${id}`);
+  }
+
+  getItems(data) {
+    return Manager.getLoadOptions('items', data);
+  }
+
+  postItem(data) {
+    return Manager.post('items', data);
+  }
+
+  destroyItem(id) {
+    return Manager.destroy(`items/${id}`);
   }
 }
 

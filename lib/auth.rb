@@ -3,7 +3,7 @@
 require 'jwt'
 
 # JWT encode&decode methods
-module Auth
+class Auth
   ALGORITHM = 'HS256'
 
   def self.encode(payload = {})

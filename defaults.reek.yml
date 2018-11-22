@@ -1,11 +1,5 @@
 ---
 detectors:
-  FeatureEnvy:
-    exclude:
-      - CreateUsers#change
-      - CreateLists#change
-      - CreateItems#change
-
   UncommunicativeVariableName:
     exclude:
       - CreateUsers#change
@@ -18,3 +12,4 @@ detectors:
 
 exclude_paths:
   - vendor
+  - db/migrate

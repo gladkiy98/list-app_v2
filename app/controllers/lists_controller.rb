@@ -3,13 +3,11 @@
 # List Controller
 class ListsController < ApplicationController
   def index
-    lists = current_user.lists
-    render json: lists, status: :ok
+    render json: current_user.lists, key_transform: :camel_lower, status: :ok
   end
 
   def show
-    items = list.items
-    render json: items, status: :ok
+    render json: list.items, status: :ok
   end
 
   def create

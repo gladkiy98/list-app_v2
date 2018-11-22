@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../App.css';
+import '../App.scss';
 import {
   HashRouter as Router,
   Route,
@@ -27,7 +27,7 @@ const App = ({ lang }) => {
 };
 
 App.propTypes = {
-  lang: PropTypes.string.isRequired,
+  lang: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

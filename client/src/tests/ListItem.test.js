@@ -25,18 +25,18 @@ const wrapper = shallow(
 
 describe('ListItem', () => {
   it('test `onHandleDestroyList`', () => {
-    wrapper.find('.delete_list').simulate('click', { preventDefault: () => {} });
+    wrapper.find('.delete-list').simulate('click', { preventDefault: () => {} });
     expect(onHandleDestroyList).toHaveBeenCalled();
   });
 
   it('test `onHandleFocus`', () => {
-    wrapper.find('.title_label').simulate('click');
+    wrapper.find('.title-label').simulate('click');
     expect(onHandleDestroyList).toHaveBeenCalled();
   });
 
-  describe('test button `.create_item`', () => {
+  describe('test button `.create-item`', () => {
     beforeAll(() => {
-      wrapper.find('.create_item').simulate('click');
+      wrapper.find('.create-item').simulate('click');
     });
 
     it('expect state to be true', () => {
@@ -44,9 +44,9 @@ describe('ListItem', () => {
     });
   });
 
-  describe('test button `.close_button`', () => {
+  describe('test button `.close-button`', () => {
     beforeAll(() => {
-      wrapper.find('.close_button').simulate('click');
+      wrapper.find('.close-button').simulate('click');
     });
 
     it('expect state to be true', () => {

@@ -20,9 +20,10 @@ const handleFocus = jest.spyOn(func, 'handleFocus');
 const handleCreateList = jest.spyOn(func, 'handleCreateList');
 const componentDidMount = jest.spyOn(func, 'componentDidMount');
 
+
 describe('validations', () => {
   it('should give errors', () => {
-    wrapper.find('.create_list').simulate('click', { preventDefault: () => {} });
+    wrapper.find('.create-list').simulate('click', { preventDefault: () => {} });
     expect(wrapper.state().errors).toEqual({
       'title_length' : 'Title cannot be empty (minimum is 1 character)'
     });
@@ -31,7 +32,7 @@ describe('validations', () => {
 
 describe('handleChange', () => {
   it('should change title', () => {
-    wrapper.find('.title_input').simulate('change', { target: { name: 'title', value: 'New title' } });
+    wrapper.find('.title-input').simulate('change', { target: { name: 'title', value: 'New title' } });
     expect(wrapper.state().title).toEqual('New title');
   });
 });
@@ -39,7 +40,7 @@ describe('handleChange', () => {
 describe('handleCreateList', () => {
   beforeAll(() => {
     mock.onPost('/api/lists', { list: { 'title': wrapper.state().title } }).reply(201, list);
-    wrapper.find('.create_list').simulate('click', { preventDefault: () => {} });
+    wrapper.find('.create-list').simulate('click', { preventDefault: () => {} });
     wrapper.update(<ListContainer />);
   });
 
@@ -77,7 +78,7 @@ describe('handleDestroyList', () => {
 describe('keydown', () => {
   beforeAll(() => {
     mock.onPost('/api/lists', { list: { 'title': wrapper.state().title } }).reply(201, list);
-    wrapper.find('.title_input').simulate('keyDown', { keyCode: 13 });
+    wrapper.find('.title-input').simulate('keyDown', { keyCode: 13 });
     wrapper.update(<ListContainer />);
   });
 
@@ -88,7 +89,7 @@ describe('keydown', () => {
 
 describe('componentDidMount', () => {
   beforeAll(() => {
-    mock.onGet('/api/lists.json').reply(201, list);
+    mock.onGet('/api/lists').reply(201, list);
     wrapper.instance().componentDidMount();
     wrapper.update(<ListContainer />);
   });

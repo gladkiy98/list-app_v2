@@ -8,5 +8,5 @@ Rails.application.routes.draw do
     resources :lists
   end
 
-  get 'api/usernames/:id', to: 'usernames#show_username'
+  get 'api/usernames/', to: 'usernames#index'
 end

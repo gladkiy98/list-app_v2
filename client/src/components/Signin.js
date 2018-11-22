@@ -12,9 +12,9 @@ import {
 } from 'reactstrap';
 import Header from './Header';
 import PropTypes from 'prop-types';
-import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
+import * as size from '../constants/magicNumbers';
 import axios from 'axios';
-import '../stylesheets/signin.css';
+import '../stylesheets/signin.scss';
 
 class SignIn extends Component {
   constructor(props) {
@@ -22,8 +22,7 @@ class SignIn extends Component {
     this.state = {
       username: '',
       password: '',
-      errors: {},
-      isSubmitted: false
+      errors: {}
     };
   }
 
@@ -51,21 +50,23 @@ class SignIn extends Component {
   }
 
   handleChange = (e) => {
-    if (this.state.isSubmitted) {
-      this.validate();
-    }
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value, errors: {} });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({ isSubmitted: true });
     if (this.validate()) {
       axios.post('/api/tokens', {
         username: this.state.username,
         password: this.state.password
-      })
-      .then(response => localStorage.setItem('jwt', response.data.jwt))
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => localStorage.setItem('jwt', response.data.jwt))
       .then(() => this.props.history.push('/dashboard'));
     }
   }
@@ -75,9 +76,9 @@ class SignIn extends Component {
       <div className='signin'>
         <Header />
         <Container>
-          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
+          <Col sm={{ size: size.SIZE_6, offset: size.SIZE_3 }}>
             <Card>
-              <CardHeader className='signin_header'>Sign in</CardHeader>
+              <CardHeader className='signin-header'>Sign in</CardHeader>
               <CardBody>
                 <Form>
                   <FormGroup>
@@ -110,7 +111,7 @@ class SignIn extends Component {
                     </div>
                   </FormGroup>
                   <button
-                      className='signin_button'
+                      className='signin-button'
                       onClick={this.handleSubmit}
                       type='button'>
                     Sign in

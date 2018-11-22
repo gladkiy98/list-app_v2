@@ -4,3 +4,4 @@ build
 node_modules
 assetsTransformer.js
 coverage
+src/setupProxy.js
