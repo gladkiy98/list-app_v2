@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Table,Button } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import FollowingUsers from './FollowingUsers';
 
@@ -13,7 +13,7 @@ export default class Following extends React.PureComponent {
   }
 
   componentDidMount() {
-    let token = localStorage.getItem('jwt');
+    const token = localStorage.getItem('jwt');
     axios.get('/api/follows', {
       headers: {
         'Authorization' : token
@@ -25,7 +25,7 @@ export default class Following extends React.PureComponent {
   }
 
   unFollow = (i, user) => () =>{
-    let users = [...this.state.users];
+    const users = [...this.state.users];
     users.splice(i, 1);
     this.setState({ users });
     let token = localStorage.getItem('jwt');

@@ -10,21 +10,11 @@ import { mapDispatchToProps } from '../components/Follow';
 
 const mockStore = configureMockStore();
 
-const user = [
-  {
+const user = [{
     id: 173,
-    username: 'Yaroslav',
-    created_at: '2018-11-01T11:21:34.751Z',
-    updated_at: '2018-11-01T11:21:34.751Z'
-  },
-  {
-    id: 69,
-    username: 'Vlad',
-    created_at: '2018-10-01T11:21:34.751Z',
-    updated_at: '2018-10-01T11:21:34.751Z'
-  }
-];
-const list2 = {
+    username: 'Yaroslav'
+}];
+const list = {
   id: 558,
   title: 'Title',
   user_id: 173,
@@ -43,7 +33,7 @@ const handleShowLists = jest.spyOn(func, 'handleShowLists');
 
 describe('Component Following', () => {
   beforeAll(() => {
-    mock.onPost('/api/follows').reply(200, user[1]);
+    mock.onPost('/api/follows').reply(200, user);
     wrapper.instance().follow(user)();
     wrapper.update(<Follow />);
   });
@@ -57,7 +47,7 @@ describe('Component Following', () => {
   beforeAll(() => {
     mock.onGet('/api/users.json').reply(200, user);
     wrapper.instance().componentDidMount();
-    wrapper.update(<Follow  />);
+    wrapper.update(<Follow />);
   });
 
   it('call function componentDidMount', () => {
@@ -90,7 +80,7 @@ describe('Component Follow', () => {
 
 describe('Component Following', () => {
   beforeAll(() => {
-    mock.onGet('/api/userlists').reply(200, list2);
+    mock.onGet('/api/userlists').reply(200, list);
     wrapper.instance().handleShowLists(user[0].username)();
     wrapper.update(<Follow />);
   });
@@ -108,7 +98,7 @@ describe('Component Following', () => {
 
 describe('Component Following', () => {
   it('work search users', () => {
-    wrapper.find('input').at(0).simulate('change', { target: { value: 'vtstepura' }});
+    wrapper.find('input').simulate('change', { target: { value: 'vtstepura' }});
     expect(wrapper.state().term).toEqual('vtstepura');
   });
 });

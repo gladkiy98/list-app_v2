@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Table
-} from 'reactstrap';
+import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';

@@ -4,7 +4,6 @@
 class UserlistsController < ApplicationController
   def index
     user = User.find(params[:id])
-    lists = user.lists
-    render json: lists
+    render json: user.lists
   end
 end

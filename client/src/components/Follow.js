@@ -1,14 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import { Table,Button } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as action from '../actions/setLists';
 import User from './User';
 
-const searchingFor= term => {
-  return function(x){
+const searchingFor = (term) => {
+  return function(x) {
     return x.username.toLowerCase().includes(term.toLowerCase()) || !term;
   };
 };
@@ -24,27 +24,25 @@ export class Follow extends React.Component {
  }
 
   componentDidMount() {
-    let token = localStorage.getItem('jwt');
+    const token = localStorage.getItem('jwt');
     axios.get('/api/users.json', {
       headers: {
         'Authorization' : token
       }
     })
     .then(response => {
-      this.setState({
-        users:response.data
-      });
+      this.setState({ users:response.data });
     });
   }
 
   handleSearch = (event) => {
-    this.setState({term: event.target.value});
+    this.setState({ term: event.target.value });
   }
 
   handleShowLists = (user) => () => {
-    let token = localStorage.getItem('jwt');
-    axios.get('/api/userlists',{
-      params:{
+    const token = localStorage.getItem('jwt');
+    axios.get('/api/userlists', {
+      params: {
         id: user.id
       }
     },
@@ -58,8 +56,8 @@ export class Follow extends React.Component {
   }
 
   follow = (user) => () => {
-    let token = localStorage.getItem('jwt');
-    axios.post('/api/follows',{
+    const token = localStorage.getItem('jwt');
+    axios.post('/api/follows', {
       followed_id: user.id
     },
     { headers: {

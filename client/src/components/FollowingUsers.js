@@ -18,9 +18,13 @@ const FollowingUsers = (props) => {
 };
 
 FollowingUsers.propTypes = {
-  i: PropTypes.number,
-  unFollow:PropTypes.func,
+  i: PropTypes.number.isRequired,
+  unFollow: PropTypes.func.isRequired,
   user: PropTypes.object
+};
+
+FollowingUsers.defaultProps = {
+  user: {}
 };
 
 export default FollowingUsers;

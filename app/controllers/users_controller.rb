@@ -8,8 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    lists = user.lists
-    render json: lists
+    render json: user.lists
   end
 
   def create
