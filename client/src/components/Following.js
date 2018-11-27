@@ -20,12 +20,12 @@ export default class Following extends React.PureComponent {
       }
     })
     .then(response => {
-      this.setState({ users:response.data });
+      this.setState({ users: response.data });
     });
   }
 
-  unFollow = (i, user) => () =>{
-    const users = [...this.state.users];
+  unFollow = (i, user) => () => {
+    let users = [...this.state.users];
     users.splice(i, 1);
     this.setState({ users });
     let token = localStorage.getItem('jwt');

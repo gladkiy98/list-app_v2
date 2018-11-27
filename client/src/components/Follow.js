@@ -31,7 +31,7 @@ export class Follow extends React.Component {
       }
     })
     .then(response => {
-      this.setState({ users:response.data });
+      this.setState({ users: response.data });
     });
   }
 
@@ -97,7 +97,7 @@ export class Follow extends React.Component {
 }
 
 Follow.propTypes = {
-  setLists: PropTypes.func
+  setLists: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -107,9 +107,5 @@ const mapStateToProps = (state) => ({
 export const mapDispatchToProps = (dispatch) => ({
   setLists: data => dispatch(action.setLists(data))
 });
-
-Follow.defaultProps = {
-  setLists: () => {}
-};
 
 export default connect(mapStateToProps,mapDispatchToProps)(Follow);
