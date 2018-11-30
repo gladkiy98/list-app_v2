@@ -129,7 +129,7 @@ class Header extends Component{
 }
 
 Header.propTypes = {
-  setLocale: PropTypes.func
+  setLocale: PropTypes.func.isRequired
 };
 
  const mapStateToProps = (state) => ({
@@ -139,9 +139,5 @@ Header.propTypes = {
 export const mapDispatchToProps = (dispatch) => ({
   setLocale: lang => dispatch(action.setLocale(lang))
 });
-
-Header.defaultProps = {
-  setLocale: () => {}
-};
 
 export default connect (mapStateToProps, { setLocale })(Header);

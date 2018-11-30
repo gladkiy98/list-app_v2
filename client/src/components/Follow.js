@@ -25,12 +25,12 @@ export class Follow extends React.Component {
 
   componentDidMount() {
     const token = localStorage.getItem('jwt');
-    axios.get('/api/users.json', {
+    axios.get('/api/users', {
       headers: {
         'Authorization' : token
       }
     })
-    .then(response => {
+    .then((response) => {
       this.setState({ users: response.data });
     });
   }
@@ -50,7 +50,7 @@ export class Follow extends React.Component {
         'Authorization' : token
       }
     })
-    .then(response => {
+    .then((response) => {
       this.props.setLists(response.data);
     });
   }

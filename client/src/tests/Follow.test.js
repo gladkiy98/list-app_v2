@@ -31,7 +31,7 @@ const follow = jest.spyOn(func, 'follow');
 const componentDidMount = jest.spyOn(func, 'componentDidMount');
 const handleShowLists = jest.spyOn(func, 'handleShowLists');
 
-describe('Component Following', () => {
+describe('Component Follow', () => {
   beforeAll(() => {
     mock.onPost('/api/follows').reply(200, user);
     wrapper.instance().follow(user)();
@@ -43,9 +43,9 @@ describe('Component Following', () => {
   });
 });
 
-describe('Component Following', () => {
+describe('Component Follow', () => {
   beforeAll(() => {
-    mock.onGet('/api/users.json').reply(200, user);
+    mock.onGet('/api/users').reply(200, user);
     wrapper.instance().componentDidMount();
     wrapper.update(<Follow />);
   });
@@ -54,7 +54,7 @@ describe('Component Following', () => {
     expect(componentDidMount).toHaveBeenCalled();
   });
 
-  it('call function componentDidMount', () => {
+  it('check state for user', () => {
     expect(wrapper.state().users[0].username).toEqual('Yaroslav');
     expect(wrapper.state().users).toEqual(user);
   });

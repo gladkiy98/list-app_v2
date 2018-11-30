@@ -19,7 +19,7 @@ export default class Following extends React.PureComponent {
         'Authorization' : token
       }
     })
-    .then(response => {
+    .then((response) => {
       this.setState({ users: response.data });
     });
   }
@@ -28,7 +28,7 @@ export default class Following extends React.PureComponent {
     let users = [...this.state.users];
     users.splice(i, 1);
     this.setState({ users });
-    let token = localStorage.getItem('jwt');
+    const token = localStorage.getItem('jwt');
     axios.delete(`/api/follows/${user.id}`,
     { headers: {
         'Authorization' : token
