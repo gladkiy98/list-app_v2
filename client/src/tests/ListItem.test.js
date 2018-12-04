@@ -13,7 +13,7 @@ const list = {
   updated_at: '2018-10-30T11:38:55.450Z' };
 const createNotification = jest.fn();
 const onHandleDestroyList = jest.fn();
-const onHandleFocus = jest.fn();
+const onHandleEdit = jest.fn();
 const wrapper = shallow(
   <ListItem
       createNotification={createNotification}
@@ -21,7 +21,7 @@ const wrapper = shallow(
       key={list.id}
       list={list}
       onHandleDestroyList={onHandleDestroyList}
-      onHandleFocus={onHandleFocus} />);
+      onHandleEdit={onHandleEdit} />);
 
 describe('ListItem', () => {
   it('test `onHandleDestroyList`', () => {

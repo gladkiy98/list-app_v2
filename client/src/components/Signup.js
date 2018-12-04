@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-literals */
 import React, { Component } from 'react';
-import axios from 'axios';
 import {
   Form,
   FormGroup,
@@ -17,6 +16,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import * as size from '../constants/magicNumbers';
 import '../stylesheets/signup.scss';
+import Api from '../lib/api';
 
 class SignUp extends Component {
   constructor(props) {
@@ -64,14 +64,14 @@ class SignUp extends Component {
     return formIsValid;
   }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value, exist: true, errorExist: '', errors: { [e.target.name]: null } });
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value, exist: true, errorExist: '', errors: { [target.name]: null } });
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
     if (this.handleValidation()) {
-      axios.post('/api/users', { user: {
+      Api.Signup.post({ user: {
         'username': this.state.username,
         'password': this.state.password,
         'password_confirmation': this.state.password_confirmation }

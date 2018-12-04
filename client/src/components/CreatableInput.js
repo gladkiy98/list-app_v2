@@ -10,7 +10,7 @@ import {
   Col,
   Row
 } from 'reactstrap';
-import api from '../lib/api';
+import Api from '../lib/api';
 import * as size from '../constants/magicNumbers';
 import Item from './Item';
 import _ from 'lodash';
@@ -25,20 +25,18 @@ class CreatableInput extends Component {
   }
 
   componentDidMount() {
-    api.getList(this.props.list.id)
+    Api.List.show(this.props.list.id)
     .then((response) => {
-      this.setState({
-        items: response.data
-      });
+      this.setState({ items: response.data });
     });
   }
 
   loadOptions = (inputValue, callback) => {
-    api.getItems({inputValue})
+    Api.Item.get({ inputValue })
     .then((response) => {
-      let items = response.data;
+      const items = response.data;
       let result = [];
-      _.forEach(items, function(option) {
+      _.forEach(items, (option) => {
         result.push({ label: option, value: option });
       });
       callback(result);
@@ -47,31 +45,30 @@ class CreatableInput extends Component {
 
   handleCreateItem = (event) => {
     event.preventDefault();
-    api.postItem(
-      { 'content': this.state.selectedOption.value ,
-        list_id: this.props.list.id
-      }
-    )
+    Api.Item.post({
+      content: this.state.selectedOption.value ,
+      list_id: this.props.list.id
+    })
     .then((response) => {
       const items = [ ...this.state.items, response.data ];
       this.setState({ items });
     });
   }
 
-  handleChange = ({ target }) => {
-    this.setState({ [target.name]: target.value });
+  handleChange = (name) => (value) => {
+    this.setState({ [name]: value });
   }
 
-  handleDestroyItem = (i, item) => () => {
-    const items = [...this.state.items];
-    items.splice(i, 1);
+  handleDestroyItem = (index, item) => () => {
+    let items = [...this.state.items];
+    items.splice(index, 1);
     this.setState({ items });
-    api.destroyItem(item.id);
+    Api.Item.destroy(item.id);
   }
 
-  handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      this.handleCreateItem(e);
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.handleCreateItem(event);
     }
   }
 
@@ -85,7 +82,7 @@ class CreatableInput extends Component {
                 isClearable
                 loadOptions={this.loadOptions}
                 name='selectedOption'
-                onChange={this.handleChange}
+                onChange={this.handleChange('selectedOption')}
                 onKeyDown={this.handleKeyDown}
                 value={this.state.selectedOption} />
           </Col>
@@ -98,19 +95,17 @@ class CreatableInput extends Component {
           </button>
         </Row>
         <TransitionGroup className="all-items">
-          {this.state.items.map((item, i) => {
-            return(
-              <CSSTransition
-                  classNames="fade"
-                  key={item.id}
-                  timeout={700}>
-                <Item
-                    index={i}
-                    item={item}
-                    onHandleDestroyItem={this.handleDestroyItem} />
-              </CSSTransition>
-            );
-          })}
+          {this.state.items.map((item, index) => (
+            <CSSTransition
+                classNames="fade"
+                key={item.id}
+                timeout={700}>
+              <Item
+                  index={index}
+                  item={item}
+                  onHandleDestroyItem={this.handleDestroyItem} />
+            </CSSTransition>
+          ))}
         </TransitionGroup>
       </div>
     );
@@ -118,7 +113,7 @@ class CreatableInput extends Component {
 }
 
 CreatableInput.propTypes = {
-  list: PropTypes.object
+  list: PropTypes.object.isRequired
 };
 
 export default CreatableInput;

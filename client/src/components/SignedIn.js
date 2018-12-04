@@ -8,8 +8,8 @@ import {
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import Manager from '../lib/manager';
 import '../stylesheets/header.scss';
+import Api from '../lib/api';
 
 class SignedIn extends Component {
   constructor(props) {
@@ -19,12 +19,10 @@ class SignedIn extends Component {
     };
   }
 
-  componentDidMount = () => {
-    Manager.get('usernames')
+  componentDidMount() {
+    Api.Username.get()
     .then((response) => {
-      this.setState({
-        username: response.data
-      });
+      this.setState({ username: response.data });
     });
   }
 

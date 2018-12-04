@@ -16,7 +16,7 @@ const list = { id: 558,
 const wrapper = shallow(<ListContainer />);
 const func = wrapper.instance();
 const handleDestroyList = jest.spyOn(func, 'handleDestroyList');
-const handleFocus = jest.spyOn(func, 'handleFocus');
+const handleEdit = jest.spyOn(func, 'handleEdit');
 const handleCreateList = jest.spyOn(func, 'handleCreateList');
 const componentDidMount = jest.spyOn(func, 'componentDidMount');
 
@@ -51,15 +51,15 @@ describe('handleCreateList', () => {
   });
 });
 
-describe('handleFocus', () => {
+describe('handleEdit', () => {
   it('handleFocus',() => {
     mock.onPut('/api/lists/558', { 'title': list.title }).reply(200, list);
-    wrapper.instance().handleFocus(list)(list.title);
+    wrapper.instance().handleEdit(list)(list.title);
     wrapper.update(<ListContainer />);
   });
 
   it('test', () => {
-    expect(handleFocus).toHaveBeenCalled();
+    expect(handleEdit).toHaveBeenCalled();
   });
 });
 

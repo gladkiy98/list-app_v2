@@ -13,8 +13,8 @@ import {
 import Header from './Header';
 import PropTypes from 'prop-types';
 import * as size from '../constants/magicNumbers';
-import axios from 'axios';
 import '../stylesheets/signin.scss';
+import Api from '../lib/api';
 
 class SignIn extends Component {
   constructor(props) {
@@ -49,23 +49,17 @@ class SignIn extends Component {
     return formIsValid;
   }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value, errors: {} });
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value, errors: {} });
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
     if (this.validate()) {
-      axios.post('/api/tokens', {
+      Api.Token.post({
         username: this.state.username,
         password: this.state.password
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+      })
       .then((response) => localStorage.setItem('jwt', response.data.jwt))
       .then(() => this.props.history.push('/dashboard'));
     }

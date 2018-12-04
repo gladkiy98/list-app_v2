@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-# List Controller
+# Item Controller
 class ItemsController < ApplicationController
   def index
-    content = 'content LIKE ?', "%#{params[:inputValue]}%"
-    items = Item.select(:content).distinct.where(content).pluck(:content).last(10)
+    items = Item.select(:content)
+                .distinct
+                .where('content LIKE ?', "%#{params[:inputValue]}%")
+                .pluck(:content)
+                .last(10)
     render json: items, status: :ok
   end
 
@@ -12,14 +15,6 @@ class ItemsController < ApplicationController
     item = list.items.create(item_params)
     if item.save
       render json: item, status: :created
-    else
-      render json: item.errors, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if list.item.update(item_params)
-      render json: item, status: :ok
     else
       render json: item.errors, status: :unprocessable_entity
     end

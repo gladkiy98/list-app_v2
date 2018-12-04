@@ -3,12 +3,12 @@ import {
   Col,
   Row
 } from 'reactstrap';
-import EditableLabel from 'react-inline-editing';
 import * as size from '../constants/magicNumbers';
 import PropTypes from 'prop-types';
 import { FormattedDate } from 'react-intl';
 import '../stylesheets/items.scss';
 import CreatableInput from './CreatableInput';
+import Editable from 'react-x-editable';
 
 class ListItem extends Component{
   constructor(props) {
@@ -19,8 +19,8 @@ class ListItem extends Component{
     };
   }
 
-  handleOpen = (param = false) => () => {
-    this.setState({ open: param });
+  handleOpen = () => {
+    this.setState((prevState) => ({ open: !prevState.open }));
   }
 
   render() {
@@ -31,7 +31,12 @@ class ListItem extends Component{
         </Col>
         <Col sm={{ size: size.SIZE_3 }}>
           <div className='title-label'>
-            <EditableLabel onFocusOut={this.props.onHandleFocus(this.props.list)} text={this.props.list.title} />
+            <Editable
+                dataType='text'
+                handleSubmit={this.props.onHandleEdit(this.props.list)}
+                mode={'inline'}
+                showButtons={'true'}
+                value={this.props.list.title} />
           </div>
         </Col>
         <Col>
@@ -44,19 +49,12 @@ class ListItem extends Component{
           </div>
         </Col>
         <Col>
-          {!this.state.open ?
-            <button
-                className='create-item'
-                onClick={this.handleOpen(true)}
-                type='button'>
-              + item
-            </button> :
-            <button
-                className='close-button'
-                onClick={this.handleOpen(false)}
-                type='button'>
-              close
-            </button> }
+          <button
+              className={this.state.open ? 'close-button' : 'create-item'}
+              onClick={this.handleOpen}
+              type='button'>
+            {this.state.open ? 'close' : '+ item' }
+          </button>
           <button
               className='delete-list'
               onClick={this.props.onHandleDestroyList(this.props.index, this.props.list)}
@@ -71,8 +69,7 @@ class ListItem extends Component{
                 createNotification={this.props.createNotification}
                 list={this.props.list} />
           </div>
-        </Col>
-        }
+        </Col>}
       </Row>
     );
   }
@@ -81,9 +78,9 @@ class ListItem extends Component{
 ListItem.propTypes = {
   createNotification: PropTypes.func,
   index: PropTypes.number,
-  list: PropTypes.object,
+  list: PropTypes.object.isRequired,
   onHandleDestroyList: PropTypes.func,
-  onHandleFocus: PropTypes.func
+  onHandleEdit: PropTypes.func
 };
 
 export default ListItem;

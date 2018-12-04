@@ -17,7 +17,7 @@ import {
 } from 'react-transition-group';
 import { NotificationContainer } from 'react-notifications';
 import notifications from '../lib/notifications';
-import api from '../lib/api';
+import Api from '../lib/api';
 
 class ListContainer extends Component {
   constructor(props) {
@@ -30,11 +30,9 @@ class ListContainer extends Component {
   }
 
   componentDidMount() {
-    api.getLists()
+    Api.List.get()
     .then((response) => {
-      this.setState({
-        lists: response.data
-      });
+      this.setState({ lists: response.data });
     });
   }
 
@@ -42,7 +40,7 @@ class ListContainer extends Component {
     let errors = {};
     let formIsValid = true;
 
-    if (!this.state.title.length) {
+    if (!this.state.title) {
       formIsValid = false;
       errors['title_length'] = 'Title cannot be empty (minimum is 1 character)';
     }
@@ -51,28 +49,27 @@ class ListContainer extends Component {
     return formIsValid;
   }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value, errors: {} });
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value, errors: {} });
   }
 
-  handleFocus = (list) => (text) => {
-    list.title = text;
-    api.putList(list.id, { 'title': list.title })
+  handleEdit = (list) => (target) => {
+    Api.List.put(list.id, { 'title': target.value })
     .then(notifications.createNotification('edit'));
   }
 
-  handleDestroyList = (i, list) => () => {
-    const lists = [...this.state.lists];
-    lists.splice(i, 1);
+  handleDestroyList = (index, list) => () => {
+    let lists = [...this.state.lists];
+    lists.splice(index, 1);
     this.setState({ lists });
-    api.destroyList(list.id)
+    Api.List.destroy(list.id)
     .then(notifications.createNotification('delete'));
   }
 
-  handleCreateList = (e) => {
-    e.preventDefault();
-    if (this.validateList()) {
-      api.postList({ list: { 'title': this.state.title } })
+  handleCreateList = (event) => {
+    event.preventDefault();
+      if (this.validateList()) {
+      Api.List.post({ list: { 'title': this.state.title } })
       .then((response) => {
         const lists = [ ...this.state.lists, response.data ];
         this.setState({ lists });
@@ -81,9 +78,9 @@ class ListContainer extends Component {
     }
   }
 
-  handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      this.handleCreateList(e);
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.handleCreateList(event);
     }
   }
 
@@ -128,18 +125,18 @@ class ListContainer extends Component {
             <Col>Actions</Col>
           </Row>
           <TransitionGroup className="todo-list">
-            {this.state.lists.sort((a, b) => (b.id - a.id)).map((list, i) => (
+            {this.state.lists.sort((a, b) => (b.id - a.id)).map((list, index) => (
               <CSSTransition
                   classNames="fade"
                   key={list.id}
                   timeout={500}>
                 <ListItem
                     createNotification={this.createNotification}
-                    index={i}
+                    index={index}
                     key={list.id}
                     list={list}
                     onHandleDestroyList={this.handleDestroyList}
-                    onHandleFocus={this.handleFocus} />
+                    onHandleEdit={this.handleEdit} />
               </CSSTransition>
             ))}
           </TransitionGroup>

@@ -1,37 +1,62 @@
-import Manager from './manager';
+import RequestManager from './requestManager';
 
-class API {
-  getList(id) {
-    return Manager.get(`lists/${id}`);
-  }
-
-  getLists() {
-    return Manager.get('lists');
-  }
-
-  postList(data) {
-    return Manager.post('lists', data);
-  }
-
-  putList(id, data) {
-    return Manager.put(`lists/${id}`, data);
-  }
-
-  destroyList(id) {
-    return Manager.destroy(`lists/${id}`);
-  }
-
-  getItems(data) {
-    return Manager.getLoadOptions('items', data);
-  }
-
-  postItem(data) {
-    return Manager.post('items', data);
-  }
-
-  destroyItem(id) {
-    return Manager.destroy(`items/${id}`);
-  }
+function Api(id, data) {
+  this.id = id;
+  this.data = data;
 }
 
-export default new API();
+Api.prototype.List = {
+  show: (id) => {
+    return RequestManager.get(`lists/${id}`);
+  },
+
+  get: () => {
+    return RequestManager.get('lists');
+  },
+
+  post: (data) => {
+    return RequestManager.post('lists', data);
+  },
+
+  put: (id, data) => {
+    return RequestManager.put(`lists/${id}`, data);
+  },
+
+  destroy: (id) => {
+    return RequestManager.destroy(`lists/${id}`);
+  }
+};
+
+Api.prototype.Username = {
+  get: () => {
+    return RequestManager.get('usernames');
+  }
+};
+
+Api.prototype.Item = {
+  get: (data) => {
+    return RequestManager.getLoadOptions('items', data);
+  },
+
+  post: (data) => {
+    return RequestManager.post('items', data);
+  },
+
+  destroy: (id) => {
+    return RequestManager.destroy(`items/${id}`);
+  }
+};
+
+Api.prototype.Token = {
+  post: (data) => {
+    return RequestManager.postAuthorize('tokens', data);
+  }
+};
+
+Api.prototype.Signup = {
+  post: (data) => {
+    return RequestManager.postAuthorize('users', data);
+  }
+};
+
+export default new Api();

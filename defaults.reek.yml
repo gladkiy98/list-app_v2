@@ -1,14 +1,13 @@
 ---
 detectors:
-  UncommunicativeVariableName:
-    exclude:
-      - CreateUsers#change
-      - CreateLists#change
-      - CreateItems#change
-
   UncommunicativeModuleName:
     reject:
       - "/^ListApp$/"
+
+  FeatureEnvy:
+    exclude:
+      - ItemsSpecHelper#expected_item
+      - ListsSpecHelper#expected_created_list
 
 exclude_paths:
   - vendor
