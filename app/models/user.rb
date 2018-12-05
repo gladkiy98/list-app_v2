@@ -13,15 +13,15 @@ class User < ApplicationRecord
   validates_presence_of :username
   validates :username, uniqueness: true
 
-  def follow(user)
-    friends.create(followed_id: user.id)
+  def follow(other_user)
+    friends.create(followed_id: other_user.id)
   end
 
-  def unfollow(user)
-    friends.find_by(followed_id: user.id).destroy
+  def unfollow(other_user)
+    friends.find_by(followed_id: other_user.id).destroy
   end
 
-  def following?(user)
-    following.include?(user)
+  def following?(other_user)
+    following.include?(other_user)
   end
 end
