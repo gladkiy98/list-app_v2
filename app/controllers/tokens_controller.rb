@@ -7,7 +7,7 @@ class TokensController < ApplicationController
     if user
       user.authenticate(params[:password])
       jwt = Auth.encode(id: user.id)
-      render json: { jwt: jwt }, status: :ok
+      render plain: { jwt: jwt }.to_json, status: :ok
     else
       render json: { error: 'Login Unsuccessfull' }, status: :unauthorized
     end

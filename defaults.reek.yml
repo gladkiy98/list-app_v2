@@ -1,5 +1,11 @@
 ---
 detectors:
+  TooManyStatements:
+    enabled: true
+    exclude:
+      - CreateFollows#change
+    max_statements: 5
+
   FeatureEnvy:
     exclude:
       - CreateUsers#change
@@ -9,6 +15,7 @@ detectors:
     exclude:
       - CreateUsers#change
       - CreateLists#change
+      - CreateFollows#change
 
   UncommunicativeModuleName:
     reject:

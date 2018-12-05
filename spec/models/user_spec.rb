@@ -28,4 +28,6 @@ RSpec.describe User, type: :model do
     user2 = build(:user, password: '123', password_confirmation: '124')
     expect(user2).not_to be_valid
   end
+
+  it { is_expected.to respond_to(:friends) }
 end

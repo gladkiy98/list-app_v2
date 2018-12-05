@@ -12,9 +12,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature) do
-    if Capybara.current_driver == :rack_test
-      DatabaseCleaner.strategy = :truncation
-    end
+    DatabaseCleaner.strategy = :truncation if Capybara.current_driver == :rack_test
   end
 
   config.before do

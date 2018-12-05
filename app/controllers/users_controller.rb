@@ -3,15 +3,14 @@
 # create, update & destroy user
 class UsersController < ApplicationController
   def index
-    user = current_user.username
-    render json: user
+    users = User.where.not(id: current_user.id)
+    render json: users
   end
 
   def create
     user = User.new(user_params)
     if user.save
-      render json: { message: 'User created successfully' },
-             status: :ok
+      render plain: {}, status: :ok
     else
       render json: { errors: user.errors.full_messages },
              status: :unprocessable_entity
