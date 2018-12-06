@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ItemsController, type: :request do
-  let(:user) { create(:user) }
-  let(:list) { create(:list, user: user) }
-  let(:item) { create(:item, list: list) }
+  include_context 'when item `let` examples'
 
   describe '#index' do
     before { index_get_items }

@@ -3,10 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ListsController, type: :request do
-  subject { list }
-
-  let(:user) { create(:user) }
-  let!(:list) { create(:list, user: user) }
+  include_context 'when list `let` examples'
 
   describe '#index' do
     before { index_get_lists }

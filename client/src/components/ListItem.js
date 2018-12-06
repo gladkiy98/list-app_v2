@@ -53,7 +53,7 @@ class ListItem extends Component{
               className={this.state.open ? 'close-button' : 'create-item'}
               onClick={this.handleOpen}
               type='button'>
-            {this.state.open ? 'close' : '+ item' }
+            {this.state.open ? 'close' : '+ item'}
           </button>
           <button
               className='delete-list'

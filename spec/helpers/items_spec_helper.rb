@@ -15,11 +15,6 @@ module ItemsSpecHelper
   end
 
   def expected_item
-    item = list.items.last
-    { 'content' => item.content,
-      'created_at' => JSON.parse(item.created_at.to_json),
-      'id' => item.id,
-      'list_id' => list.id,
-      'updated_at' => JSON.parse(item.updated_at.to_json) }
+    list.items.last.slice('id', 'content', 'list_id')
   end
 end

@@ -1,8 +1,12 @@
 require: rubocop-rspec
 
 AllCops:
+  TargetRubyVersion: 2.5.1
   Exclude:
     - 'client/node_modules/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+
 
 Metrics/LineLength:
   Max: 120

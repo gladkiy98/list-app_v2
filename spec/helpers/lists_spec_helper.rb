@@ -18,12 +18,8 @@ module ListsSpecHelper
     delete "/api/lists/#{list.id}", headers: login_user(user)
   end
 
-  def expected_created_list
-    list = user.lists.last
-    { 'created_at' => JSON.parse(list.created_at.to_json),
-      'id' => list.id,
-      'title' => list.title,
-      'user_id' => user.id }
+  def expected_created_list(val)
+    user.lists.last.slice(val).delete(val)
   end
 
   def expected_index_list

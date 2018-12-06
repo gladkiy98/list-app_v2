@@ -21,5 +21,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-/config/secrets.yml
 /client/package-lock.json
+package-lock.json
+/node_modules

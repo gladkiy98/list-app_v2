@@ -46,11 +46,11 @@ class CreatableInput extends Component {
   handleCreateItem = (event) => {
     event.preventDefault();
     Api.Item.post({
-      content: this.state.selectedOption.value ,
+      content: this.state.selectedOption.value,
       list_id: this.props.list.id
     })
     .then((response) => {
-      const items = [ ...this.state.items, response.data ];
+      const items = [...this.state.items, response.data];
       this.setState({ items });
     });
   }

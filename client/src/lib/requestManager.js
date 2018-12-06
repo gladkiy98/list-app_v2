@@ -18,7 +18,7 @@ class RequestManager {
     }
   })
 
-  authorizeOptions = ( method ) => ({
+  authorizeOptions = (method) => ({
     method,
     headers: {
       'Content-Type': 'application/json'

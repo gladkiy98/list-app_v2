@@ -44,7 +44,7 @@ jobs:
       - run: bundle exec rake db:schema:load
 
       # run rubocop
-      - run: rubocop
+      - run: bundle exec rubocop --config .rubocop.yml
 
       # run reek
       - run: reek -c defaults.reek.yml

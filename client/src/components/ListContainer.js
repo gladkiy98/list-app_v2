@@ -71,7 +71,7 @@ class ListContainer extends Component {
       if (this.validateList()) {
       Api.List.post({ list: { 'title': this.state.title } })
       .then((response) => {
-        const lists = [ ...this.state.lists, response.data ];
+        const lists = [...this.state.lists, response.data];
         this.setState({ lists });
       })
       .then(notifications.createNotification('success'));
