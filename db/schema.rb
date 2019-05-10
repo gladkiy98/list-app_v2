@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema.define(version: 20_180_925_181_714) do
+ActiveRecord::Schema.define(version: 20_181_012_131_038) do
   enable_extension 'plpgsql'
+
+  create_table 'items', force: :cascade do |t|
+    t.string 'content'
+    t.integer 'list_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[list_id created_at], name: 'index_items_on_list_id_and_created_a'
+  end
 
   create_table 'lists', force: :cascade do |t|
     t.string 'title'

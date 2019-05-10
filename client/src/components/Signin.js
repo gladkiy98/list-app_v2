@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Header from './Header';
 import {
-  Button,
   Form,
   FormGroup,
   Label,
@@ -12,9 +10,11 @@ import {
   Container,
   Col
 } from 'reactstrap';
+import Header from './Header';
 import PropTypes from 'prop-types';
-import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
-import axios from 'axios';
+import * as size from '../constants/magicNumbers';
+import '../stylesheets/signin.scss';
+import Api from '../lib/api';
 
 class SignIn extends Component {
   constructor(props) {
@@ -22,8 +22,7 @@ class SignIn extends Component {
     this.state = {
       username: '',
       password: '',
-      errors: {},
-      isSubmitted: false
+      errors: {}
     };
   }
 
@@ -50,21 +49,18 @@ class SignIn extends Component {
     return formIsValid;
   }
 
-  handleChange = (e) => {
-    if (this.state.isSubmitted) {
-      this.validate();
-    }
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value, errors: {} });
   }
 
-  handleSubmit = () => {
-    this.setState({ isSubmitted: true });
+  handleSubmit = (event) => {
+    event.preventDefault();
     if (this.validate()) {
-    axios.post('/api/tokens', {
+      Api.Token.post({
         username: this.state.username,
         password: this.state.password
       })
-      .then(response => window.localStorage.setItem('jwt', response.data.jwt))
+      .then((response) => localStorage.setItem('jwt', response.data.jwt))
       .then(() => this.props.history.push('/dashboard'));
     }
   }
@@ -74,9 +70,9 @@ class SignIn extends Component {
       <div className='signin'>
         <Header />
         <Container>
-          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
+          <Col sm={{ size: size.SIZE_6, offset: size.SIZE_3 }}>
             <Card>
-              <CardHeader>Sign in</CardHeader>
+              <CardHeader className='signin-header'>Sign in</CardHeader>
               <CardBody>
                 <Form>
                   <FormGroup>
@@ -88,7 +84,7 @@ class SignIn extends Component {
                         placeholder="Username"
                         type='username'
                         value={this.state.username} />
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['username']}
                     </div>
                   </FormGroup>
@@ -101,14 +97,19 @@ class SignIn extends Component {
                         placeholder="Password"
                         type='password'
                         value={this.state.password} />
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password']}
                     </div>
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password_length']}
                     </div>
                   </FormGroup>
-                  <Button className='button' onClick={this.handleSubmit}>Submit</Button>
+                  <button
+                      className='signin-button'
+                      onClick={this.handleSubmit}
+                      type='button'>
+                    Sign in
+                  </button>
                 </Form>
               </CardBody>
             </Card>

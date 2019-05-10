@@ -4,6 +4,6 @@
 class User < ApplicationRecord
   has_many :lists, dependent: :destroy
   has_secure_password
-  validates :username, :password, :password_confirmation, presence: true
+  validates_presence_of :username
   validates :username, uniqueness: true
 end

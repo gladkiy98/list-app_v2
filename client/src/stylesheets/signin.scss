@@ -1,0 +1,25 @@
+@import 'colors';
+
+.signin-header {
+  background-color: $main-purple-color;
+  border: none;
+  color: white;
+}
+
+.signin-button {
+  border-radius: 4px;
+  color: $main-purple-color;
+  background-color: inherit;
+  border: 1px solid $main-purple-color;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s;
+}
+
+.signin-button:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $main-purple-color;
+}

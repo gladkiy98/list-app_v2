@@ -1,19 +1,26 @@
 export default {
-
   en: {
-    'nav.dashboard': 'List App',
+    'nav.mainpage': 'Main',
+    'nav.dashboard': 'List Up',
     'nav.signin': 'Signin',
-    'nav.login': 'Login',
     'nav.hi': 'Hi',
     'nav.settings': 'Settings',
-    'nav.logout': 'Logout'
+    'nav.logout': 'Logout',
+    'nav.username': 'Username',
+    'nav.password': 'Password',
+    'nav.password_confirmation': 'Password confirmation',
+    'nav.signup': 'Sign up'
   },
   ru: {
-    'nav.dashboard': 'List App',
+    'nav.mainpage': 'Главная',
+    'nav.dashboard': 'List Up',
     'nav.signin': 'Войти',
-    'nav.login': 'Логин',
     'nav.hi': 'Привет',
     'nav.settings': 'Настройки',
-    'nav.logout': 'Выйти'
+    'nav.logout': 'Выйти',
+    'nav.username': 'Имя',
+    'nav.password': 'Пароль',
+    'nav.password_confirmation': 'Повторите пароль',
+    'nav.signup': 'Регистрация'
   }
 };

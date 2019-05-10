@@ -1,9 +1,6 @@
 /* eslint-disable react/jsx-no-literals */
 import React, { Component } from 'react';
-import axios from 'axios';
-import Header from './Header';
 import {
-  Button,
   Form,
   FormGroup,
   Label,
@@ -14,8 +11,12 @@ import {
   Container,
   Col
 } from 'reactstrap';
+import Header from './Header';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { SIZE_6, SIZE_3 } from '../constants/magic-numbers';
+import * as size from '../constants/magicNumbers';
+import '../stylesheets/signup.scss';
+import Api from '../lib/api';
 
 class SignUp extends Component {
   constructor(props) {
@@ -25,7 +26,6 @@ class SignUp extends Component {
       password: '',
       password_confirmation: '',
       errors: {},
-      isSubmitted: false,
       errorExist: '',
       exist: true
     };
@@ -64,17 +64,14 @@ class SignUp extends Component {
     return formIsValid;
   }
 
-  handleChange = (e) => {
-    if (this.state.isSubmitted) {
-      this.handleValidation();
-    }
-    this.setState({ [e.target.name]: e.target.value, exist: true, errorExist: ''});
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value, exist: true, errorExist: '', errors: { [target.name]: null } });
   }
 
-  handleSubmit = () => {
-    this.setState({ isSubmitted: true });
+  handleSubmit = (event) => {
+    event.preventDefault();
     if (this.handleValidation()) {
-      axios.post('/api/users', { user: {
+      Api.Signup.post({ user: {
         'username': this.state.username,
         'password': this.state.password,
         'password_confirmation': this.state.password_confirmation }
@@ -95,13 +92,17 @@ class SignUp extends Component {
       <div className='signup'>
         <Header />
         <Container>
-          <Col sm={{ size: SIZE_6, offset: SIZE_3 }}>
+          <Col sm={{ size: size.SIZE_6, offset: size.SIZE_3 }}>
             <Card>
-              <CardHeader>Sign up</CardHeader>
+              <CardHeader className='signup-header'>
+                <FormattedMessage defaultMessage="Sign up" id="nav.signup" />
+              </CardHeader>
               <CardBody>
                 <Form>
                   <FormGroup>
-                    <Label for="username">Username</Label>
+                    <Label for="username">
+                      <FormattedMessage defaultMessage="Username" id="nav.username" />
+                    </Label>
                     <Input
                         id='username'
                         name='username'
@@ -109,15 +110,17 @@ class SignUp extends Component {
                         placeholder="Username"
                         type='username'
                         value={this.state.username} />
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['username']}
                     </div>
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errorExist}
                     </div>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="password">Password</Label>
+                    <Label for="password">
+                      <FormattedMessage defaultMessage="Password" id="nav.password" />
+                    </Label>
                     <Input
                         id='password'
                         name='password'
@@ -125,15 +128,17 @@ class SignUp extends Component {
                         placeholder="Password"
                         type='password'
                         value={this.state.password} />
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password']}
                     </div>
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password_length']}
                     </div>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="password">Password Confirmation</Label>
+                    <Label for="password">
+                      <FormattedMessage defaultMessage="Password confirmation" id="nav.password_confirmation" />
+                    </Label>
                     <Input
                         id='password_confirmation'
                         name='password_confirmation'
@@ -141,14 +146,19 @@ class SignUp extends Component {
                         placeholder="Password Confirmation"
                         type='password'
                         value={this.state.password_confirmation} />
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password_confirmation']}
                     </div>
-                    <div className='error'>
+                    <div className='text-danger'>
                       {this.state.errors['password_confirmation_equal']}
                     </div>
                   </FormGroup>
-                  <Button className='signup_button' onClick={this.handleSubmit}>Sign up</Button>
+                  <button
+                      className='signup-button'
+                      onClick={this.handleSubmit}
+                      type='button'>
+                    <FormattedMessage defaultMessage="Sign up" id="nav.signup" />
+                  </button>
                 </Form>
               </CardBody>
             </Card>

@@ -13,7 +13,7 @@ RSpec.describe UsersController, type: :controller do
         { user: {
           username: user.username,
           password: user.password,
-          password_confirmation: user.password_confirmation
+          password_confirmation: user.password_confirmation,
         } }
       end
 
@@ -25,7 +25,7 @@ RSpec.describe UsersController, type: :controller do
         { user: {
           username: user.username,
           password: user.password,
-          password_confirmation: 0o00
+          password_confirmation: 0o00,
         } }
       end
 

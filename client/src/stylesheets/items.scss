@@ -1,0 +1,84 @@
+@import 'colors';
+
+/* create item button */
+.create-item {
+  border: 1px solid;
+  border-radius: 4px;
+  color: $create-color;
+  background-color: inherit;
+  border-color: $create-color;
+  padding: 4px;
+  transition: all 0.3s;
+}
+
+.create-item:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $create-color;
+  transition: all 0.3s;
+}
+
+.create-item:focus {
+  outline: none;
+}
+
+/* delete list button */
+.delete-list {
+  border: 1px solid;
+  border-radius: 4px;
+  color: $destroy-color;
+  background-color: inherit;
+  border-color: $destroy-color;
+  padding: 4px;
+  margin-left: 2%;
+  margin-top: 1%;
+  transition: all 0.3s;
+}
+
+.delete-list:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $destroy-color;
+  transition: all 0.3s;
+}
+
+.delete-list:focus {
+  outline: none;
+}
+
+/* table */
+tr {
+  color: black;
+}
+
+.single-list {
+  margin-top: 0;
+}
+
+/* close button */
+.close-button {
+  border: 1px solid;
+  border-radius: 4px;
+  color: $destroy-color;
+  background-color: inherit;
+  border-color: $destroy-color;
+  padding: 4px;
+  transition: all 0.3s;
+}
+
+.close-button:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $destroy-color;
+  transition: all 0.3s;
+}
+
+/* creatable_input */
+.creatable-input {
+  margin-top: 2%;
+}
+
+/* all_items */
+.all-items {
+  margin-top: 1%;
+}

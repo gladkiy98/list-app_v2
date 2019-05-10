@@ -1,0 +1,71 @@
+@import 'colors';
+
+/* create list button */
+.create-list {
+  border-radius: 4px;
+  color: $create-color;
+  background-color: inherit;
+  border: 1px solid $create-color;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 2%;
+  transition: all 0.3s;
+}
+
+.create-list:hover {
+  color: $text-hover-color;
+  cursor: pointer;
+  background-color: $create-color;
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
+}
+
+/* table_header */
+.table-header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: $table-header-background;
+  color: white;
+}
+
+.single-list {
+  transition: all 0.4s;
+  padding-top: 1%;
+  padding-bottom: 2%;
+}
+
+.single-list:hover {
+  background-color: $list-hover-color;
+  transition: all 0.5s;
+}
+
+.title-label {
+  margin-left: 2%;
+  margin-top: 1%;
+  padding-bottom: 1%;
+}
+
+.delete-list {
+  margin-left: 2%;
+  margin-top: 1%;
+}

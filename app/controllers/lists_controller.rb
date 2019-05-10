@@ -3,8 +3,11 @@
 # List Controller
 class ListsController < ApplicationController
   def index
-    lists = current_user.lists
-    render json: lists
+    render json: current_user.lists, key_transform: :camel_lower, status: :ok
+  end
+
+  def show
+    render json: list.items, status: :ok
   end
 
   def create
@@ -18,7 +21,7 @@ class ListsController < ApplicationController
 
   def update
     if list.update(list_params)
-      render json: list
+      render json: list, status: :ok
     else
       render json: list.errors, status: :unprocessable_entity
     end

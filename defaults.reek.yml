@@ -1,18 +1,14 @@
 ---
 detectors:
-  FeatureEnvy:
-    exclude:
-      - CreateUsers#change
-      - CreateLists#change
-
-  UncommunicativeVariableName:
-    exclude:
-      - CreateUsers#change
-      - CreateLists#change
-
   UncommunicativeModuleName:
     reject:
       - "/^ListApp$/"
 
+  FeatureEnvy:
+    exclude:
+      - ItemsSpecHelper#expected_item
+      - ListsSpecHelper#expected_created_list
+
 exclude_paths:
   - vendor
+  - db/migrate

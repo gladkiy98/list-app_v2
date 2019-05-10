@@ -1,118 +1,147 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import _ from 'lodash';
 import {
-  Button,
   Form,
   FormGroup,
   Input,
   Container,
-  Col
+  Col,
+  Row
 } from 'reactstrap';
-import EditableLabel from 'react-inline-editing';
-import { SIZE_8, SIZE_2 } from '../constants/magic-numbers';
+import * as size from '../constants/magicNumbers';
+import ListItem from './ListItem';
+import 'react-notifications/lib/notifications.css';
+import '../stylesheets/lists.scss';
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
+import { NotificationContainer } from 'react-notifications';
+import notifications from '../lib/notifications';
+import Api from '../lib/api';
 
-class ListContainer extends Component{
+class ListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       lists: [],
       title: '',
+      errors: {}
     };
   }
 
   componentDidMount() {
-    let token = localStorage.getItem('jwt');
-    axios.get('/api/lists.json', {
-      headers: {
-        'Authorization' : token
-      }
-    })
-    .then(response => {
-      this.setState({
-        lists: response.data
-      });
+    Api.List.get()
+    .then((response) => {
+      this.setState({ lists: response.data });
     });
   }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  validateList = () => {
+    let errors = {};
+    let formIsValid = true;
+
+    if (!this.state.title) {
+      formIsValid = false;
+      errors['title_length'] = 'Title cannot be empty (minimum is 1 character)';
+    }
+
+    this.setState({ errors });
+    return formIsValid;
   }
 
-  handleFocus = (list) => (text) => {
-    list.title = text;
-    let token = localStorage.getItem('jwt');
-    axios.put(`/api/lists/${list.id}`, { 'title': list.title },
-      {
-        headers: {
-          'Authorization': token,
-        }
-      })
-    .then((response) => response);
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value, errors: {} });
   }
 
-  handleDestroyList = (i, list) => () => {
-    const lists = [...this.state.lists];
-    lists.splice(i, 1);
+  handleEdit = (list) => (target) => {
+    Api.List.put(list.id, { 'title': target.value })
+    .then(notifications.createNotification('edit'));
+  }
+
+  handleDestroyList = (index, list) => () => {
+    let lists = [...this.state.lists];
+    lists.splice(index, 1);
     this.setState({ lists });
-    let token = localStorage.getItem('jwt');
-    axios.delete(`/api/lists/${list.id}`,
-      {
-        headers: {
-          'Authorization' : token
-        }
-      }
-    );
+    Api.List.destroy(list.id)
+    .then(notifications.createNotification('delete'));
   }
 
-  handleCreateList = () => {
-    let token = localStorage.getItem('jwt');
-    axios.post('/api/lists', { list: { 'title': this.state.title } },
-      {
-        headers: {
-          'Authorization' : token
-        }
-      }
-    )
-    .then(response => {
-      const lists = [ ...this.state.lists, response.data ];
-      this.setState({ lists });
-    });
+  handleCreateList = (event) => {
+    event.preventDefault();
+      if (this.validateList()) {
+      Api.List.post({ list: { 'title': this.state.title } })
+      .then((response) => {
+        const lists = [...this.state.lists, response.data];
+        this.setState({ lists });
+      })
+      .then(notifications.createNotification('success'));
+    }
+  }
+
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.handleCreateList(event);
+    }
   }
 
   render() {
     return(
       <Container className='list'>
-        <Col sm={{ size: SIZE_8, offset: SIZE_2 }}>
+        <Col sm={{ size: size.SIZE_8, offset: size.SIZE_2 }}>
           <Form>
             <FormGroup>
-              <Input
-                  id='title'
-                  name='title'
-                  onChange={this.handleChange}
-                  placeholder='Title'
-                  value={this.state.title} />
+              <Row>
+                <Col sm={{ size: size.SIZE_10 }}>
+                  <Input
+                      className='title-input'
+                      id='title'
+                      name='title'
+                      onChange={this.handleChange}
+                      onKeyDown={this.handleKeyDown}
+                      placeholder='Add List'
+                      value={this.state.title} />
+                  <div className='text-danger'>
+                    {this.state.errors['title_length']}
+                  </div>
+                </Col>
+                <Col sm={{ size: size.SIZE_2 }}>
+                  <button
+                      className='create-list'
+                      id='list_button'
+                      onClick={this.handleCreateList}
+                      type='button'>
+                    +
+                  </button>
+                </Col>
+              </Row>
             </FormGroup>
-            <Button
-                id='listbutton'
-                onClick={this.handleCreateList}>Add List</Button>
           </Form>
         </Col>
-        <Col sm={{ size: SIZE_8, offset: SIZE_2 }}>
-          {_.orderBy(this.state.lists, ['id'], ['desc']).map((list, i) => {
-            return (
-              <div className="single-list" id='listok' key={list.id}>
-                <EditableLabel onFocusOut={this.handleFocus(list)} text={list.title} />
-                <Button
-                    onClick={this.handleDestroyList(i, list)}
-                    outline
-                    size="sm">
-                  Delete
-                </Button>
-              </div>
-            );
-          })}
+        <Col sm={{ size: size.SIZE_8, offset: size.SIZE_2 }}>
+          <Row className="table-header">
+            <Col sm={{ size: size.SIZE_1 }}>#</Col>
+            <Col sm={{ size: size.SIZE_3 }}>List name</Col>
+            <Col>Create date</Col>
+            <Col>Actions</Col>
+          </Row>
+          <TransitionGroup className="todo-list">
+            {this.state.lists.sort((a, b) => (b.id - a.id)).map((list, index) => (
+              <CSSTransition
+                  classNames="fade"
+                  key={list.id}
+                  timeout={500}>
+                <ListItem
+                    createNotification={this.createNotification}
+                    index={index}
+                    key={list.id}
+                    list={list}
+                    onHandleDestroyList={this.handleDestroyList}
+                    onHandleEdit={this.handleEdit} />
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         </Col>
+        <NotificationContainer />
       </Container>
     );
   }

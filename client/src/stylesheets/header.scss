@@ -1,0 +1,81 @@
+@import 'colors';
+
+.header-navbar {
+  margin-bottom: 20px;
+}
+
+/* header signup_button */
+.header-signup {
+  border-radius: 4px;
+  color: $main-purple-color;
+  background-color: inherit;
+  border: 1px solid $main-purple-color;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s;
+}
+
+.header-signup:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $main-purple-color;
+}
+
+/* header signin_button */
+.header-signin {
+  border-radius: 4px;
+  color: $main-purple-color;
+  background-color: inherit;
+  border: 1px solid $main-purple-color;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s;
+  margin-right: 10px;
+}
+
+.header-signin:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $main-purple-color;
+}
+
+/* change language buttons */
+.button-ru {
+  border-radius: 4px;
+  color: $main-purple-color;
+  background-color: inherit;
+  border: 1px solid $main-purple-color;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s;
+}
+
+.button-ru:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $main-purple-color;
+}
+
+.button-en {
+  border-radius: 4px;
+  color: $main-purple-color;
+  background-color: inherit;
+  border: 1px solid $main-purple-color;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s;
+}
+
+.button-en:hover {
+  color: white;
+  cursor: pointer;
+  background-color: $main-purple-color;
+}

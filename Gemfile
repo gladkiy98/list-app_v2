@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'capybara-selenium'
 gem 'faker', git: 'https://github.com/stympy/faker.git'
@@ -17,6 +18,7 @@ gem 'reek'
 gem 'rubocop', require: false
 
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

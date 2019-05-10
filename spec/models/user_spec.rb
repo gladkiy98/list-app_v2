@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'is not valid without a password_confirmation' do
-    user2 = build(:user, password_confirmation: nil)
+    user2 = build(:user, password_confirmation: '')
     expect(user2).not_to be_valid
   end
 

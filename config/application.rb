@@ -24,7 +24,7 @@ module ListAppV2
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:4000'
+        origins '*'
         resource '*', headers: :any, methods: %i[
           delete put patch get post options
         ]
